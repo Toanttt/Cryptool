@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text;
@@ -33,6 +34,7 @@ namespace Cryptool
                     matrix[i, j] = str[i * version + j];
         }
 
+        // Lấy vị trí của char trong ma trận
         (int, int) FindPosition(char c, char[,] matrix)
         {
             for (int i = 0; i < version; i++)
@@ -41,6 +43,7 @@ namespace Cryptool
             return (-1, -1);
         }
 
+        // Lấy cặp char sau khi mã hoá 
         string GetPairEncode(char a, char b, char[,] matrix)
         {
             (int aPosi, int aPosj) = FindPosition(a, matrix);
@@ -52,7 +55,7 @@ namespace Cryptool
 
             return $"{matrix[aPosi, aPosj]}{matrix[bPosi, bPosj]}";
         }
-
+        // Lấy cặp char sau khi giải mã 
         string GetPairDecode(char a, char b, char[,] matrix)
         {
             (int aPosi, int aPosj) = FindPosition(a, matrix);
@@ -65,7 +68,7 @@ namespace Cryptool
             return $"{matrix[aPosi, aPosj]}{matrix[bPosi, bPosj]}";
         }
 
-        // Tạo ma trận khoá
+        // Tạo ma trận theo khoá
         public char[,] createMatrix(string key)
         {
             char[,] matrix = new char[version, version];
@@ -108,6 +111,7 @@ namespace Cryptool
             return matrix;
         }
 
+        // Xoá chữ trong tiếng việt
         private string RemoveDiacritics(string text)
         {
             string stFormD = text.Normalize(NormalizationForm.FormD);
@@ -125,15 +129,45 @@ namespace Cryptool
             return sb.ToString().Normalize(NormalizationForm.FormC);
         }
 
-        // Mã hoá 
-        public string Encode(string mes, string key)
+        // Xử lý thông điệp cần mã hoá
+        private string HandleMes(string input)
         {
-            mes = RemoveDiacritics(mes);
-            mes = new string(mes.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray());
+            input = RemoveDiacritics(input.ToUpper());
+            if (version == 5)
+            {
+                input = new string(input.Where(char.IsLetter).ToArray()).Replace('J', 'I');
+            }
+            else if (version == 6) {
+                input = new string(input.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray());
+            }
 
-            if (mes.Length % 2 == 1) mes += 'X';
+            StringBuilder result = new StringBuilder();
+
+            for (int i = 0; i < input.Length; i++)
+            {
+                // Lấy chữ đầu tiên
+                char currentChar = input[i];
+                result.Append(currentChar);
+
+                if (i < input.Length - 1 && input[i] == input[i + 1])
+                {
+                    result.Append(currentChar == 'X' ? 'Y' : 'X');
+                }
+            }
+
+            if (result.Length % 2 == 1)
+            {
+                result.Append(result[result.Length - 1] == 'X' ? 'Y' : 'X');
+            }
+            return result.ToString();
+        }
+
+        // Mã hoá 
+        public string Encode(string mes)
+        {
+            mes = HandleMes(mes);
+            // Ra kết quả
             string result = "";
-
             for (int i = 0; i < mes.Length; i += 2)
                 result += GetPairEncode(mes[i], mes[i + 1], matrixLayout);
 
@@ -141,7 +175,7 @@ namespace Cryptool
         }
 
         // Giải mã
-        public string Decode(string mes, string key)
+        public string Decode(string mes)
         {
             if (mes.Length % 2 == 1) return "Mật mã có số lượng lẻ";
             mes = RemoveDiacritics(mes);
@@ -153,12 +187,13 @@ namespace Cryptool
             return result.ToUpper();
         }
 
-        // get() cho ma trận
+        // get() ma trận
         public char[,]? getMatrix()
         {
             if (matrixLayout == null) return null;
             return matrixLayout;
         }
+        // Thiết lập version cho Playfair
         public void setVersion(int version)
         {
             if (version == 5 || version == 6)

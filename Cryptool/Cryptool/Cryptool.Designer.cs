@@ -1,6 +1,6 @@
 ﻿namespace Cryptool
 {
-    partial class Form1
+    partial class Cryptool
     {
         /// <summary>
         ///  Required designer variable.
@@ -33,19 +33,19 @@
             btnSave = new Button();
             btnOpen = new Button();
             btnNew = new Button();
-            tabControl1 = new TabControl();
+            tctrlMain = new TabControl();
             tabPlayfair = new TabPage();
             cbVersion = new ComboBox();
             tlpKeyMatrix = new TableLayoutPanel();
-            rtbInput = new RichTextBox();
+            rtbInputPlayfair = new RichTextBox();
             label12 = new Label();
-            btnDecrypt = new Button();
-            btnEncrypt = new Button();
+            btnDecryptPlayfair = new Button();
+            btnEncryptPlayfair = new Button();
             label7 = new Label();
             panel3 = new Panel();
-            rtbResult = new RichTextBox();
+            rtbResultPlayfair = new RichTextBox();
             label10 = new Label();
-            rtbKey = new RichTextBox();
+            rtbKeyPlayfair = new RichTextBox();
             label11 = new Label();
             tabRSA = new TabPage();
             button7 = new Button();
@@ -62,7 +62,7 @@
             richTextBox2 = new RichTextBox();
             label2 = new Label();
             panel1.SuspendLayout();
-            tabControl1.SuspendLayout();
+            tctrlMain.SuspendLayout();
             tabPlayfair.SuspendLayout();
             panel3.SuspendLayout();
             tabRSA.SuspendLayout();
@@ -76,16 +76,17 @@
             panel1.Controls.Add(btnSave);
             panel1.Controls.Add(btnOpen);
             panel1.Controls.Add(btnNew);
-            panel1.Location = new Point(-1, -1);
+            panel1.Dock = DockStyle.Top;
+            panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(1043, 45);
+            panel1.Size = new Size(923, 49);
             panel1.TabIndex = 2;
             // 
             // label1
             // 
             label1.AutoSize = true;
             label1.Font = new Font("Segoe UI", 20F);
-            label1.Location = new Point(0, -6);
+            label1.Location = new Point(3, 0);
             label1.Name = "label1";
             label1.Size = new Size(333, 46);
             label1.TabIndex = 6;
@@ -121,33 +122,34 @@
             btnNew.UseVisualStyleBackColor = true;
             btnNew.Click += btnNew_Click;
             // 
-            // tabControl1
+            // tctrlMain
             // 
-            tabControl1.Controls.Add(tabPlayfair);
-            tabControl1.Controls.Add(tabRSA);
-            tabControl1.Font = new Font("Segoe UI", 10F);
-            tabControl1.Location = new Point(12, 50);
-            tabControl1.Name = "tabControl1";
-            tabControl1.SelectedIndex = 0;
-            tabControl1.Size = new Size(1016, 655);
-            tabControl1.TabIndex = 6;
+            tctrlMain.Controls.Add(tabPlayfair);
+            tctrlMain.Controls.Add(tabRSA);
+            tctrlMain.Dock = DockStyle.Bottom;
+            tctrlMain.Font = new Font("Segoe UI", 10F);
+            tctrlMain.Location = new Point(0, 54);
+            tctrlMain.Name = "tctrlMain";
+            tctrlMain.SelectedIndex = 0;
+            tctrlMain.Size = new Size(923, 663);
+            tctrlMain.TabIndex = 6;
             // 
             // tabPlayfair
             // 
             tabPlayfair.Controls.Add(cbVersion);
             tabPlayfair.Controls.Add(tlpKeyMatrix);
-            tabPlayfair.Controls.Add(rtbInput);
+            tabPlayfair.Controls.Add(rtbInputPlayfair);
             tabPlayfair.Controls.Add(label12);
-            tabPlayfair.Controls.Add(btnDecrypt);
-            tabPlayfair.Controls.Add(btnEncrypt);
+            tabPlayfair.Controls.Add(btnDecryptPlayfair);
+            tabPlayfair.Controls.Add(btnEncryptPlayfair);
             tabPlayfair.Controls.Add(label7);
             tabPlayfair.Controls.Add(panel3);
-            tabPlayfair.Controls.Add(rtbKey);
+            tabPlayfair.Controls.Add(rtbKeyPlayfair);
             tabPlayfair.Controls.Add(label11);
             tabPlayfair.Location = new Point(4, 32);
             tabPlayfair.Name = "tabPlayfair";
             tabPlayfair.Padding = new Padding(3);
-            tabPlayfair.Size = new Size(1008, 619);
+            tabPlayfair.Size = new Size(915, 627);
             tabPlayfair.TabIndex = 0;
             tabPlayfair.Text = "Playfair";
             tabPlayfair.UseVisualStyleBackColor = true;
@@ -182,14 +184,14 @@
             tlpKeyMatrix.Size = new Size(250, 250);
             tlpKeyMatrix.TabIndex = 26;
             // 
-            // rtbInput
+            // rtbInputPlayfair
             // 
-            rtbInput.BorderStyle = BorderStyle.None;
-            rtbInput.Location = new Point(31, 106);
-            rtbInput.Name = "rtbInput";
-            rtbInput.Size = new Size(369, 183);
-            rtbInput.TabIndex = 25;
-            rtbInput.Text = "KhanhQuoc";
+            rtbInputPlayfair.BorderStyle = BorderStyle.None;
+            rtbInputPlayfair.Location = new Point(31, 106);
+            rtbInputPlayfair.Name = "rtbInputPlayfair";
+            rtbInputPlayfair.Size = new Size(369, 183);
+            rtbInputPlayfair.TabIndex = 25;
+            rtbInputPlayfair.Text = "KhanhQuoc";
             // 
             // label12
             // 
@@ -200,25 +202,27 @@
             label12.TabIndex = 24;
             label12.Text = "Input Text";
             // 
-            // btnDecrypt
+            // btnDecryptPlayfair
             // 
-            btnDecrypt.Location = new Point(129, 569);
-            btnDecrypt.Name = "btnDecrypt";
-            btnDecrypt.Size = new Size(94, 44);
-            btnDecrypt.TabIndex = 23;
-            btnDecrypt.Text = "Decrypt";
-            btnDecrypt.UseVisualStyleBackColor = true;
-            btnDecrypt.Click += btnDecrypt_Click;
+            btnDecryptPlayfair.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnDecryptPlayfair.Location = new Point(129, 569);
+            btnDecryptPlayfair.Name = "btnDecryptPlayfair";
+            btnDecryptPlayfair.Size = new Size(94, 44);
+            btnDecryptPlayfair.TabIndex = 23;
+            btnDecryptPlayfair.Text = "Decrypt";
+            btnDecryptPlayfair.UseVisualStyleBackColor = true;
+            btnDecryptPlayfair.Click += btnDecrypt_Click;
             // 
-            // btnEncrypt
+            // btnEncryptPlayfair
             // 
-            btnEncrypt.Location = new Point(29, 569);
-            btnEncrypt.Name = "btnEncrypt";
-            btnEncrypt.Size = new Size(94, 44);
-            btnEncrypt.TabIndex = 22;
-            btnEncrypt.Text = "Encrypt";
-            btnEncrypt.UseVisualStyleBackColor = true;
-            btnEncrypt.Click += btnEncrypt_Click;
+            btnEncryptPlayfair.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
+            btnEncryptPlayfair.Location = new Point(29, 569);
+            btnEncryptPlayfair.Name = "btnEncryptPlayfair";
+            btnEncryptPlayfair.Size = new Size(94, 44);
+            btnEncryptPlayfair.TabIndex = 22;
+            btnEncryptPlayfair.Text = "Encrypt";
+            btnEncryptPlayfair.UseVisualStyleBackColor = true;
+            btnEncryptPlayfair.Click += btnEncrypt_Click;
             // 
             // label7
             // 
@@ -231,21 +235,21 @@
             // 
             // panel3
             // 
-            panel3.Controls.Add(rtbResult);
+            panel3.Controls.Add(rtbResultPlayfair);
             panel3.Controls.Add(label10);
             panel3.Location = new Point(31, 375);
             panel3.Name = "panel3";
             panel3.Size = new Size(821, 188);
             panel3.TabIndex = 19;
             // 
-            // rtbResult
+            // rtbResultPlayfair
             // 
-            rtbResult.BorderStyle = BorderStyle.None;
-            rtbResult.Location = new Point(19, 35);
-            rtbResult.Name = "rtbResult";
-            rtbResult.Size = new Size(782, 138);
-            rtbResult.TabIndex = 22;
-            rtbResult.Text = "";
+            rtbResultPlayfair.BorderStyle = BorderStyle.None;
+            rtbResultPlayfair.Location = new Point(19, 35);
+            rtbResultPlayfair.Name = "rtbResultPlayfair";
+            rtbResultPlayfair.Size = new Size(782, 138);
+            rtbResultPlayfair.TabIndex = 22;
+            rtbResultPlayfair.Text = "";
             // 
             // label10
             // 
@@ -257,15 +261,15 @@
             label10.TabIndex = 8;
             label10.Text = "RESULT";
             // 
-            // rtbKey
+            // rtbKeyPlayfair
             // 
-            rtbKey.BorderStyle = BorderStyle.None;
-            rtbKey.Location = new Point(31, 39);
-            rtbKey.Name = "rtbKey";
-            rtbKey.Size = new Size(369, 32);
-            rtbKey.TabIndex = 18;
-            rtbKey.Text = "Hello";
-            rtbKey.ContentsResized += rtbKey_ContentsResized;
+            rtbKeyPlayfair.BorderStyle = BorderStyle.None;
+            rtbKeyPlayfair.Location = new Point(31, 39);
+            rtbKeyPlayfair.Name = "rtbKeyPlayfair";
+            rtbKeyPlayfair.Size = new Size(369, 32);
+            rtbKeyPlayfair.TabIndex = 18;
+            rtbKeyPlayfair.Text = "Hello";
+            rtbKeyPlayfair.ContentsResized += rtbKey_ContentsResized;
             // 
             // label11
             // 
@@ -285,10 +289,10 @@
             tabRSA.Controls.Add(panel2);
             tabRSA.Controls.Add(richTextBox2);
             tabRSA.Controls.Add(label2);
-            tabRSA.Location = new Point(4, 29);
+            tabRSA.Location = new Point(4, 32);
             tabRSA.Name = "tabRSA";
             tabRSA.Padding = new Padding(3);
-            tabRSA.Size = new Size(1008, 622);
+            tabRSA.Size = new Size(915, 627);
             tabRSA.TabIndex = 1;
             tabRSA.Text = "RSA";
             tabRSA.UseVisualStyleBackColor = true;
@@ -411,19 +415,19 @@
             label2.TabIndex = 7;
             label2.Text = "Cryptool";
             // 
-            // Form1
+            // Cryptool
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Gainsboro;
-            ClientSize = new Size(1040, 717);
-            Controls.Add(tabControl1);
+            ClientSize = new Size(923, 717);
+            Controls.Add(tctrlMain);
             Controls.Add(panel1);
-            Name = "Form1";
+            Name = "Cryptool";
             Text = "EncryptTool";
             panel1.ResumeLayout(false);
             panel1.PerformLayout();
-            tabControl1.ResumeLayout(false);
+            tctrlMain.ResumeLayout(false);
             tabPlayfair.ResumeLayout(false);
             tabPlayfair.PerformLayout();
             panel3.ResumeLayout(false);
@@ -441,7 +445,7 @@
         private Button btnSave;
         private Button btnOpen;
         private Label label1;
-        private TabControl tabControl1;
+        private TabControl tctrlMain;
         private TabPage tabPlayfair;
         private TabPage tabRSA;
         private RichTextBox richTextBox2;
@@ -457,16 +461,16 @@
         private Label label4;
         private Button button7;
         private Button button3;
-        private Button btnDecrypt;
-        private Button btnEncrypt;
+        private Button btnDecryptPlayfair;
+        private Button btnEncryptPlayfair;
         private Label label7;
         private Panel panel3;
         private Label label10;
-        private RichTextBox rtbKey;
+        private RichTextBox rtbKeyPlayfair;
         private Label label11;
-        private RichTextBox rtbInput;
+        private RichTextBox rtbInputPlayfair;
         private Label label12;
-        private RichTextBox rtbResult;
+        private RichTextBox rtbResultPlayfair;
         private TableLayoutPanel tlpKeyMatrix;
         private ComboBox cbVersion;
     }

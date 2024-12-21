@@ -1,15 +1,17 @@
 ﻿using System.Drawing.Drawing2D;
 using System;
+using System.Reflection.Metadata;
+using System.Windows.Forms;
 
 namespace Cryptool
 {
-    public partial class Form1 : Form
+    public partial class Cryptool : Form
     {
         PlayfairCipher? cipher;
         char[,] matrixLayout;
         int version = 5; //playfair mặc định 5x5
 
-        public Form1()
+        public Cryptool()
         {
             InitializeComponent();
 
@@ -29,7 +31,7 @@ namespace Cryptool
             this.version = version;
             matrixLayout = new char[version, version];
             InitMatrix(matrixLayout, '-');
-            string change = rtbKey.Text;
+            string change = rtbKeyPlayfair.Text;
             matrixLayout = cipher.createMatrix(change);
             DisplayMatrix(matrixLayout);
         }
@@ -93,25 +95,25 @@ namespace Cryptool
 
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
-            string key = rtbKey.Text;
-            string input = rtbInput.Text;
-            string result = cipher.Encode(input, key);
-            rtbResult.Text = result;
+            string key = rtbKeyPlayfair.Text;
+            string input = rtbInputPlayfair.Text;
+            string result = cipher.Encode(input);
+            rtbResultPlayfair.Text = result;
             DisplayMatrix(cipher.getMatrix());
         }
 
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
-            string key = rtbKey.Text;
-            string input = rtbInput.Text;
-            string result = cipher.Decode(input, key);
-            rtbResult.Text = result;
+            string key = rtbKeyPlayfair.Text;
+            string input = rtbInputPlayfair.Text;
+            string result = cipher.Decode(input);
+            rtbResultPlayfair.Text = result;
             DisplayMatrix(cipher.getMatrix());
         }
 
         private void rtbKey_ContentsResized(object sender, ContentsResizedEventArgs e)
         {
-            string change = rtbKey.Text;
+            string change = rtbKeyPlayfair.Text;
             matrixLayout = cipher.createMatrix(change);
             DisplayMatrix(matrixLayout);
         }
@@ -138,13 +140,19 @@ namespace Cryptool
                 Title = "Chọn file văn bản"
             };
 
-            // Kiểm tra nếu người dùng chọn file và nhấn "Mở"
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 try
                 {
                     string fileContent = File.ReadAllText(openFileDialog.FileName);
-                    rtbInput.Text = fileContent;
+                    int currentIndex = tctrlMain.SelectedIndex;
+                    if (currentIndex == 0)
+                    {
+                        rtbInputPlayfair.Text = fileContent;
+                    } else if (currentIndex == 1) // Cần điền 
+                    {
+
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -155,13 +163,43 @@ namespace Cryptool
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            rtbInput.Clear();
-            rtbKey.Clear();
+            rtbInputPlayfair.Clear();
+            rtbKeyPlayfair.Clear();
+            rtbResultPlayfair.Clear();
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            using (SaveFileDialog saveFileDialog = new SaveFileDialog())
+            {
+                saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"; 
+                saveFileDialog.Title = "Save Text File";
+                saveFileDialog.DefaultExt = "txt";
+                saveFileDialog.AddExtension = true;
 
+                if (saveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    try
+                    {
+                        int currentIndex = tctrlMain.SelectedIndex;
+                        string content = "";
+                        if (currentIndex == 0)
+                        {
+                            content = rtbResultPlayfair.Text;
+                        }
+                        else if (currentIndex == 1) // Cần điền 
+                        {
+
+                        }
+                        File.WriteAllText(saveFileDialog.FileName, content);
+                        MessageBox.Show("File saved successfully!", "Success", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    }
+                    catch (Exception ex)
+                    {
+                        MessageBox.Show($"Error saving file: {ex.Message}", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                    }
+                }
+            }
         }
         #endregion
 
