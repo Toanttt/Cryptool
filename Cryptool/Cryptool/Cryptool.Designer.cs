@@ -79,7 +79,7 @@
             panel1.Dock = DockStyle.Top;
             panel1.Location = new Point(0, 0);
             panel1.Name = "panel1";
-            panel1.Size = new Size(923, 49);
+            panel1.Size = new Size(913, 49);
             panel1.TabIndex = 2;
             // 
             // label1
@@ -131,7 +131,7 @@
             tctrlMain.Location = new Point(0, 54);
             tctrlMain.Name = "tctrlMain";
             tctrlMain.SelectedIndex = 0;
-            tctrlMain.Size = new Size(923, 663);
+            tctrlMain.Size = new Size(913, 663);
             tctrlMain.TabIndex = 6;
             // 
             // tabPlayfair
@@ -149,7 +149,7 @@
             tabPlayfair.Location = new Point(4, 32);
             tabPlayfair.Name = "tabPlayfair";
             tabPlayfair.Padding = new Padding(3);
-            tabPlayfair.Size = new Size(915, 627);
+            tabPlayfair.Size = new Size(905, 627);
             tabPlayfair.TabIndex = 0;
             tabPlayfair.Text = "Playfair";
             tabPlayfair.UseVisualStyleBackColor = true;
@@ -159,7 +159,7 @@
             // 
             cbVersion.FormattingEnabled = true;
             cbVersion.Items.AddRange(new object[] { "5x5", "6x6" });
-            cbVersion.Location = new Point(545, 13);
+            cbVersion.Location = new Point(625, 13);
             cbVersion.Name = "cbVersion";
             cbVersion.Size = new Size(151, 31);
             cbVersion.TabIndex = 27;
@@ -173,7 +173,7 @@
             tlpKeyMatrix.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tlpKeyMatrix.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
             tlpKeyMatrix.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 20F));
-            tlpKeyMatrix.Location = new Point(496, 47);
+            tlpKeyMatrix.Location = new Point(526, 50);
             tlpKeyMatrix.Name = "tlpKeyMatrix";
             tlpKeyMatrix.RowCount = 5;
             tlpKeyMatrix.RowStyles.Add(new RowStyle(SizeType.Percent, 20F));
@@ -227,7 +227,7 @@
             // label7
             // 
             label7.AutoSize = true;
-            label7.Location = new Point(488, 13);
+            label7.Location = new Point(526, 16);
             label7.Name = "label7";
             label7.Size = new Size(58, 23);
             label7.TabIndex = 20;
@@ -237,17 +237,17 @@
             // 
             panel3.Controls.Add(rtbResultPlayfair);
             panel3.Controls.Add(label10);
-            panel3.Location = new Point(31, 375);
+            panel3.Location = new Point(29, 351);
             panel3.Name = "panel3";
-            panel3.Size = new Size(821, 188);
+            panel3.Size = new Size(868, 188);
             panel3.TabIndex = 19;
             // 
             // rtbResultPlayfair
             // 
             rtbResultPlayfair.BorderStyle = BorderStyle.None;
-            rtbResultPlayfair.Location = new Point(19, 35);
+            rtbResultPlayfair.Location = new Point(0, 23);
             rtbResultPlayfair.Name = "rtbResultPlayfair";
-            rtbResultPlayfair.Size = new Size(782, 138);
+            rtbResultPlayfair.Size = new Size(865, 138);
             rtbResultPlayfair.TabIndex = 22;
             rtbResultPlayfair.Text = "";
             // 
@@ -292,7 +292,7 @@
             tabRSA.Location = new Point(4, 32);
             tabRSA.Name = "tabRSA";
             tabRSA.Padding = new Padding(3);
-            tabRSA.Size = new Size(915, 627);
+            tabRSA.Size = new Size(905, 627);
             tabRSA.TabIndex = 1;
             tabRSA.Text = "RSA";
             tabRSA.UseVisualStyleBackColor = true;
@@ -420,9 +420,10 @@
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.Gainsboro;
-            ClientSize = new Size(923, 717);
+            ClientSize = new Size(913, 717);
             Controls.Add(tctrlMain);
             Controls.Add(panel1);
+            FormBorderStyle = FormBorderStyle.FixedDialog;
             Name = "Cryptool";
             Text = "EncryptTool";
             panel1.ResumeLayout(false);
