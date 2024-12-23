@@ -57,26 +57,48 @@
             rtbKeyPlayfair = new RichTextBox();
             label11 = new Label();
             tabRSA = new TabPage();
-            button7 = new Button();
-            button3 = new Button();
-            richTextBox1 = new RichTextBox();
-            label3 = new Label();
-            panel2 = new Panel();
-            button2 = new Button();
-            richTextBox4 = new RichTextBox();
-            label6 = new Label();
-            richTextBox3 = new RichTextBox();
-            label5 = new Label();
-            label4 = new Label();
-            richTextBox2 = new RichTextBox();
+            panel_manual = new Panel();
+            textBox_D = new TextBox();
+            label16 = new Label();
+            textBox_phiN = new TextBox();
+            label17 = new Label();
+            textBox_E = new TextBox();
+            label15 = new Label();
+            textBox_N = new TextBox();
             label2 = new Label();
+            textBox_Q = new TextBox();
+            label4 = new Label();
+            textBox_P = new TextBox();
+            label5 = new Label();
+            label6 = new Label();
+            resultPanel = new Panel();
+            label_message = new Label();
+            button_decrypt = new Button();
+            button_encrypt = new Button();
+            cipher_textbox = new RichTextBox();
+            label3 = new Label();
+            panel_auto = new Panel();
+            radioButton3 = new RadioButton();
+            radioButton4 = new RadioButton();
+            radioButton2 = new RadioButton();
+            radioButton1 = new RadioButton();
+            privatekeyTextbox = new RichTextBox();
+            label18 = new Label();
+            publickeyTextbox = new RichTextBox();
+            label19 = new Label();
+            label20 = new Label();
+            plain_textbox = new RichTextBox();
+            label21 = new Label();
+            checkBox_auto = new CheckBox();
             panel1.SuspendLayout();
             tctrlMain.SuspendLayout();
             tabPlayfair.SuspendLayout();
             gbOption.SuspendLayout();
             panel3.SuspendLayout();
             tabRSA.SuspendLayout();
-            panel2.SuspendLayout();
+            panel_manual.SuspendLayout();
+            resultPanel.SuspendLayout();
+            panel_auto.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -160,7 +182,7 @@
             tabPlayfair.Controls.Add(label11);
             tabPlayfair.Location = new Point(4, 32);
             tabPlayfair.Name = "tabPlayfair";
-            tabPlayfair.Padding = new Padding(3, 3, 3, 3);
+            tabPlayfair.Padding = new Padding(3);
             tabPlayfair.Size = new Size(905, 757);
             tabPlayfair.TabIndex = 0;
             tabPlayfair.Text = "Playfair";
@@ -400,138 +422,337 @@
             // 
             // tabRSA
             // 
-            tabRSA.Controls.Add(button7);
-            tabRSA.Controls.Add(button3);
-            tabRSA.Controls.Add(richTextBox1);
+            tabRSA.Controls.Add(panel_manual);
+            tabRSA.Controls.Add(resultPanel);
+            tabRSA.Controls.Add(button_decrypt);
+            tabRSA.Controls.Add(button_encrypt);
+            tabRSA.Controls.Add(cipher_textbox);
             tabRSA.Controls.Add(label3);
-            tabRSA.Controls.Add(panel2);
-            tabRSA.Controls.Add(richTextBox2);
-            tabRSA.Controls.Add(label2);
+            tabRSA.Controls.Add(panel_auto);
+            tabRSA.Controls.Add(plain_textbox);
+            tabRSA.Controls.Add(label21);
+            tabRSA.Controls.Add(checkBox_auto);
             tabRSA.Location = new Point(4, 32);
             tabRSA.Name = "tabRSA";
-            tabRSA.Padding = new Padding(3, 3, 3, 3);
+            tabRSA.Padding = new Padding(3);
             tabRSA.Size = new Size(905, 757);
             tabRSA.TabIndex = 1;
             tabRSA.Text = "RSA";
             tabRSA.UseVisualStyleBackColor = true;
             tabRSA.Click += tabPage2_Click;
             // 
-            // button7
+            // panel_manual
             // 
-            button7.Location = new Point(163, 456);
-            button7.Name = "button7";
-            button7.Size = new Size(94, 29);
-            button7.TabIndex = 16;
-            button7.Text = "button7";
-            button7.UseVisualStyleBackColor = true;
+            panel_manual.BackColor = Color.White;
+            panel_manual.Controls.Add(textBox_D);
+            panel_manual.Controls.Add(label16);
+            panel_manual.Controls.Add(textBox_phiN);
+            panel_manual.Controls.Add(label17);
+            panel_manual.Controls.Add(textBox_E);
+            panel_manual.Controls.Add(label15);
+            panel_manual.Controls.Add(textBox_N);
+            panel_manual.Controls.Add(label2);
+            panel_manual.Controls.Add(textBox_Q);
+            panel_manual.Controls.Add(label4);
+            panel_manual.Controls.Add(textBox_P);
+            panel_manual.Controls.Add(label5);
+            panel_manual.Controls.Add(label6);
+            panel_manual.Location = new Point(46, 142);
+            panel_manual.Name = "panel_manual";
+            panel_manual.Size = new Size(821, 255);
+            panel_manual.TabIndex = 18;
             // 
-            // button3
+            // textBox_D
             // 
-            button3.Location = new Point(63, 456);
-            button3.Name = "button3";
-            button3.Size = new Size(94, 29);
-            button3.TabIndex = 15;
-            button3.Text = "button3";
-            button3.UseVisualStyleBackColor = true;
+            textBox_D.Location = new Point(425, 199);
+            textBox_D.Name = "textBox_D";
+            textBox_D.Size = new Size(243, 30);
+            textBox_D.TabIndex = 34;
             // 
-            // richTextBox1
+            // label16
             // 
-            richTextBox1.Location = new Point(488, 73);
-            richTextBox1.Name = "richTextBox1";
-            richTextBox1.Size = new Size(396, 151);
-            richTextBox1.TabIndex = 13;
-            richTextBox1.Text = "";
+            label16.AutoSize = true;
+            label16.Location = new Point(425, 176);
+            label16.Name = "label16";
+            label16.Size = new Size(111, 23);
+            label16.TabIndex = 33;
+            label16.Text = "Private Key D";
             // 
-            // label3
+            // textBox_phiN
             // 
-            label3.AutoSize = true;
-            label3.Location = new Point(488, 28);
-            label3.Name = "label3";
-            label3.Size = new Size(75, 23);
-            label3.TabIndex = 12;
-            label3.Text = "Cryptool";
+            textBox_phiN.Location = new Point(425, 136);
+            textBox_phiN.Name = "textBox_phiN";
+            textBox_phiN.ReadOnly = true;
+            textBox_phiN.Size = new Size(243, 30);
+            textBox_phiN.TabIndex = 32;
             // 
-            // panel2
+            // label17
             // 
-            panel2.Controls.Add(button2);
-            panel2.Controls.Add(richTextBox4);
-            panel2.Controls.Add(label6);
-            panel2.Controls.Add(richTextBox3);
-            panel2.Controls.Add(label5);
-            panel2.Controls.Add(label4);
-            panel2.Location = new Point(63, 243);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(821, 184);
-            panel2.TabIndex = 11;
+            label17.AutoSize = true;
+            label17.Location = new Point(425, 113);
+            label17.Name = "label17";
+            label17.Size = new Size(156, 23);
+            label17.TabIndex = 31;
+            label17.Text = "Euler's Totient φ(N)";
             // 
-            // button2
+            // textBox_E
             // 
-            button2.Location = new Point(27, 129);
-            button2.Name = "button2";
-            button2.Size = new Size(94, 29);
-            button2.TabIndex = 14;
-            button2.Text = "button2";
-            button2.UseVisualStyleBackColor = true;
+            textBox_E.Location = new Point(17, 136);
+            textBox_E.Name = "textBox_E";
+            textBox_E.Size = new Size(246, 30);
+            textBox_E.TabIndex = 28;
             // 
-            // richTextBox4
+            // label15
             // 
-            richTextBox4.Location = new Point(425, 72);
-            richTextBox4.Name = "richTextBox4";
-            richTextBox4.Size = new Size(367, 39);
-            richTextBox4.TabIndex = 16;
-            richTextBox4.Text = "";
+            label15.AutoSize = true;
+            label15.Location = new Point(17, 113);
+            label15.Name = "label15";
+            label15.Size = new Size(19, 23);
+            label15.TabIndex = 27;
+            label15.Text = "E";
             // 
-            // label6
+            // textBox_N
             // 
-            label6.AutoSize = true;
-            label6.Location = new Point(425, 36);
-            label6.Name = "label6";
-            label6.Size = new Size(75, 23);
-            label6.TabIndex = 15;
-            label6.Text = "Cryptool";
-            // 
-            // richTextBox3
-            // 
-            richTextBox3.Location = new Point(27, 72);
-            richTextBox3.Name = "richTextBox3";
-            richTextBox3.Size = new Size(367, 39);
-            richTextBox3.TabIndex = 14;
-            richTextBox3.Text = "";
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(27, 36);
-            label5.Name = "label5";
-            label5.Size = new Size(75, 23);
-            label5.TabIndex = 9;
-            label5.Text = "Cryptool";
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(27, 0);
-            label4.Name = "label4";
-            label4.Size = new Size(75, 23);
-            label4.TabIndex = 8;
-            label4.Text = "Cryptool";
-            // 
-            // richTextBox2
-            // 
-            richTextBox2.Location = new Point(63, 73);
-            richTextBox2.Name = "richTextBox2";
-            richTextBox2.Size = new Size(396, 151);
-            richTextBox2.TabIndex = 10;
-            richTextBox2.Text = "";
+            textBox_N.Location = new Point(17, 199);
+            textBox_N.Name = "textBox_N";
+            textBox_N.ReadOnly = true;
+            textBox_N.Size = new Size(246, 30);
+            textBox_N.TabIndex = 26;
             // 
             // label2
             // 
             label2.AutoSize = true;
-            label2.Location = new Point(63, 28);
+            label2.Location = new Point(17, 176);
             label2.Name = "label2";
-            label2.Size = new Size(75, 23);
-            label2.TabIndex = 7;
-            label2.Text = "Cryptool";
+            label2.Size = new Size(23, 23);
+            label2.TabIndex = 25;
+            label2.Text = "N";
+            // 
+            // textBox_Q
+            // 
+            textBox_Q.Location = new Point(425, 65);
+            textBox_Q.Name = "textBox_Q";
+            textBox_Q.Size = new Size(243, 30);
+            textBox_Q.TabIndex = 24;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(425, 42);
+            label4.Name = "label4";
+            label4.Size = new Size(96, 23);
+            label4.TabIndex = 23;
+            label4.Text = "Prime 2 (Q)";
+            // 
+            // textBox_P
+            // 
+            textBox_P.Location = new Point(17, 65);
+            textBox_P.Name = "textBox_P";
+            textBox_P.Size = new Size(246, 30);
+            textBox_P.TabIndex = 22;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(17, 42);
+            label5.Name = "label5";
+            label5.Size = new Size(93, 23);
+            label5.TabIndex = 18;
+            label5.Text = "Prime 1 (P)";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(17, 0);
+            label6.Name = "label6";
+            label6.Size = new Size(144, 23);
+            label6.TabIndex = 8;
+            label6.Text = "Key Management";
+            // 
+            // resultPanel
+            // 
+            resultPanel.BackColor = Color.WhiteSmoke;
+            resultPanel.Controls.Add(label_message);
+            resultPanel.Location = new Point(46, 415);
+            resultPanel.Name = "resultPanel";
+            resultPanel.Size = new Size(821, 32);
+            resultPanel.TabIndex = 29;
+            // 
+            // label_message
+            // 
+            label_message.AutoSize = true;
+            label_message.Location = new Point(20, 5);
+            label_message.Name = "label_message";
+            label_message.Size = new Size(55, 23);
+            label_message.TabIndex = 0;
+            label_message.Text = "label8";
+            // 
+            // button_decrypt
+            // 
+            button_decrypt.Location = new Point(146, 465);
+            button_decrypt.Name = "button_decrypt";
+            button_decrypt.Size = new Size(94, 29);
+            button_decrypt.TabIndex = 28;
+            button_decrypt.Text = "Decrypt";
+            button_decrypt.UseVisualStyleBackColor = true;
+            // 
+            // button_encrypt
+            // 
+            button_encrypt.Location = new Point(46, 465);
+            button_encrypt.Name = "button_encrypt";
+            button_encrypt.Size = new Size(94, 29);
+            button_encrypt.TabIndex = 27;
+            button_encrypt.Text = "Encrypt";
+            button_encrypt.UseVisualStyleBackColor = true;
+            // 
+            // cipher_textbox
+            // 
+            cipher_textbox.Location = new Point(471, 38);
+            cipher_textbox.Name = "cipher_textbox";
+            cipher_textbox.Size = new Size(396, 84);
+            cipher_textbox.TabIndex = 26;
+            cipher_textbox.Text = "";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(471, 15);
+            label3.Name = "label3";
+            label3.Size = new Size(95, 23);
+            label3.TabIndex = 25;
+            label3.Text = "Cipher Text";
+            // 
+            // panel_auto
+            // 
+            panel_auto.BackColor = Color.White;
+            panel_auto.Controls.Add(radioButton3);
+            panel_auto.Controls.Add(radioButton4);
+            panel_auto.Controls.Add(radioButton2);
+            panel_auto.Controls.Add(radioButton1);
+            panel_auto.Controls.Add(privatekeyTextbox);
+            panel_auto.Controls.Add(label18);
+            panel_auto.Controls.Add(publickeyTextbox);
+            panel_auto.Controls.Add(label19);
+            panel_auto.Controls.Add(label20);
+            panel_auto.Location = new Point(46, 142);
+            panel_auto.Name = "panel_auto";
+            panel_auto.Size = new Size(821, 255);
+            panel_auto.TabIndex = 24;
+            // 
+            // radioButton3
+            // 
+            radioButton3.AutoSize = true;
+            radioButton3.Location = new Point(200, 218);
+            radioButton3.Name = "radioButton3";
+            radioButton3.Size = new Size(92, 27);
+            radioButton3.TabIndex = 20;
+            radioButton3.TabStop = true;
+            radioButton3.Text = "2048 bit";
+            radioButton3.UseVisualStyleBackColor = true;
+            // 
+            // radioButton4
+            // 
+            radioButton4.AutoSize = true;
+            radioButton4.Location = new Point(298, 218);
+            radioButton4.Name = "radioButton4";
+            radioButton4.Size = new Size(92, 27);
+            radioButton4.TabIndex = 19;
+            radioButton4.TabStop = true;
+            radioButton4.Text = "4096 bit";
+            radioButton4.UseVisualStyleBackColor = true;
+            // 
+            // radioButton2
+            // 
+            radioButton2.AutoSize = true;
+            radioButton2.Location = new Point(110, 218);
+            radioButton2.Name = "radioButton2";
+            radioButton2.Size = new Size(92, 27);
+            radioButton2.TabIndex = 18;
+            radioButton2.TabStop = true;
+            radioButton2.Text = "1024 bit";
+            radioButton2.UseVisualStyleBackColor = true;
+            // 
+            // radioButton1
+            // 
+            radioButton1.AutoSize = true;
+            radioButton1.Location = new Point(28, 218);
+            radioButton1.Name = "radioButton1";
+            radioButton1.Size = new Size(83, 27);
+            radioButton1.TabIndex = 17;
+            radioButton1.TabStop = true;
+            radioButton1.Text = "512 bit";
+            radioButton1.UseVisualStyleBackColor = true;
+            // 
+            // privatekeyTextbox
+            // 
+            privatekeyTextbox.Location = new Point(425, 59);
+            privatekeyTextbox.Name = "privatekeyTextbox";
+            privatekeyTextbox.Size = new Size(368, 153);
+            privatekeyTextbox.TabIndex = 16;
+            privatekeyTextbox.Text = "";
+            // 
+            // label18
+            // 
+            label18.AutoSize = true;
+            label18.Location = new Point(425, 36);
+            label18.Name = "label18";
+            label18.Size = new Size(94, 23);
+            label18.TabIndex = 15;
+            label18.Text = "Private Key";
+            // 
+            // publickeyTextbox
+            // 
+            publickeyTextbox.AcceptsTab = true;
+            publickeyTextbox.Location = new Point(28, 59);
+            publickeyTextbox.Name = "publickeyTextbox";
+            publickeyTextbox.Size = new Size(368, 153);
+            publickeyTextbox.TabIndex = 14;
+            publickeyTextbox.Text = "";
+            // 
+            // label19
+            // 
+            label19.AutoSize = true;
+            label19.Location = new Point(28, 36);
+            label19.Name = "label19";
+            label19.Size = new Size(88, 23);
+            label19.TabIndex = 9;
+            label19.Text = "Public Key";
+            // 
+            // label20
+            // 
+            label20.AutoSize = true;
+            label20.Location = new Point(17, 0);
+            label20.Name = "label20";
+            label20.Size = new Size(144, 23);
+            label20.TabIndex = 8;
+            label20.Text = "Key Management";
+            // 
+            // plain_textbox
+            // 
+            plain_textbox.Location = new Point(46, 38);
+            plain_textbox.Name = "plain_textbox";
+            plain_textbox.Size = new Size(396, 84);
+            plain_textbox.TabIndex = 23;
+            plain_textbox.Text = "";
+            // 
+            // label21
+            // 
+            label21.AutoSize = true;
+            label21.Location = new Point(46, 15);
+            label21.Name = "label21";
+            label21.Size = new Size(88, 23);
+            label21.TabIndex = 22;
+            label21.Text = "Plaint Text";
+            // 
+            // checkBox_auto
+            // 
+            checkBox_auto.AutoSize = true;
+            checkBox_auto.Location = new Point(740, 3);
+            checkBox_auto.Name = "checkBox_auto";
+            checkBox_auto.Size = new Size(144, 27);
+            checkBox_auto.TabIndex = 30;
+            checkBox_auto.Text = "Auto Generate";
+            checkBox_auto.UseVisualStyleBackColor = true;
             // 
             // Cryptool
             // 
@@ -555,8 +776,12 @@
             panel3.PerformLayout();
             tabRSA.ResumeLayout(false);
             tabRSA.PerformLayout();
-            panel2.ResumeLayout(false);
-            panel2.PerformLayout();
+            panel_manual.ResumeLayout(false);
+            panel_manual.PerformLayout();
+            resultPanel.ResumeLayout(false);
+            resultPanel.PerformLayout();
+            panel_auto.ResumeLayout(false);
+            panel_auto.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -569,19 +794,6 @@
         private TabControl tctrlMain;
         private TabPage tabPlayfair;
         private TabPage tabRSA;
-        private RichTextBox richTextBox2;
-        private Label label2;
-        private RichTextBox richTextBox1;
-        private Label label3;
-        private Panel panel2;
-        private Button button2;
-        private RichTextBox richTextBox4;
-        private Label label6;
-        private RichTextBox richTextBox3;
-        private Label label5;
-        private Label label4;
-        private Button button7;
-        private Button button3;
         private Button btnDecryptPlayfair;
         private Button btnEncryptPlayfair;
         private Label label7;
@@ -603,5 +815,38 @@
         private CheckBox cbChar;
         private ComboBox cb5x5;
         private Label label14;
+        private Panel resultPanel;
+        private Label label_message;
+        private Button button_decrypt;
+        private Button button_encrypt;
+        private RichTextBox cipher_textbox;
+        private Label label3;
+        private Panel panel_auto;
+        private Panel panel_manual;
+        private TextBox textBox_D;
+        private Label label16;
+        private TextBox textBox_phiN;
+        private Label label17;
+        private TextBox textBox_E;
+        private Label label15;
+        private TextBox textBox_N;
+        private Label label2;
+        private TextBox textBox_Q;
+        private Label label4;
+        private TextBox textBox_P;
+        private Label label5;
+        private Label label6;
+        private RadioButton radioButton3;
+        private RadioButton radioButton4;
+        private RadioButton radioButton2;
+        private RadioButton radioButton1;
+        private RichTextBox privatekeyTextbox;
+        private Label label18;
+        private RichTextBox publickeyTextbox;
+        private Label label19;
+        private Label label20;
+        private RichTextBox plain_textbox;
+        private Label label21;
+        private CheckBox checkBox_auto;
     }
 }
