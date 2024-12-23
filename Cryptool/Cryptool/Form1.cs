@@ -13,6 +13,10 @@ namespace Cryptool
         {
             InitializeComponent();
 
+
+        }
+        private void init()
+        {
             // Gắn sự kiện cho RadioButton
             radioButton1.CheckedChanged += RadioButton_CheckedChanged;
             radioButton2.CheckedChanged += RadioButton_CheckedChanged;
@@ -30,7 +34,6 @@ namespace Cryptool
             showmessage("Nhập P và Q để tạo khoá thủ công");
             inittooltip();
         }
-
         private void inittooltip()
         {
             ToolTip tooltip = new ToolTip()
