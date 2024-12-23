@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using System.Security.Cryptography;
+using System.Text.RegularExpressions;
 
 namespace Cryptool
 {
@@ -146,8 +147,8 @@ namespace Cryptool
             string input = rtbInputPlayfair.Text;
             string result = cipher.Encode(input, firstSep, sencondSep); // Hàm giải mã chính
             string[] resultString = result.Split(' ', 2);
-            rtbResultPlayfair.Text = splitPair(resultString[0]) +
-                "\n" + splitPair(resultString[1]);
+            rtbResultPlayfair.Text = "{Message} " + splitPair(resultString[0]) +
+                "\n" +"{Cipher} " + splitPair(resultString[1]);
         }
 
         string splitPair(string input)
@@ -202,7 +203,8 @@ namespace Cryptool
                 result = splitPair(result);
             }
             string mes = splitPair(rtbInputPlayfair.Text.ToUpper());
-            rtbResultPlayfair.Text = mes + "\n" + result;
+            rtbResultPlayfair.Text = "{Cipher} " + mes + 
+                "\n" + "{Message} " + result;
         }
 
         private void rtbKey_ContentsResized(object sender, ContentsResizedEventArgs e)
@@ -216,6 +218,11 @@ namespace Cryptool
         {
             char c1 = 'X';
             char c2 = 'Y';
+            if (string.IsNullOrEmpty(tbFirstSep.Text))
+            {
+                tbFirstSep.Text = "X";
+                return;
+            }
             if (tbFirstSep.Text.Length > 1)
             {
                 tbFirstSep.Text = tbFirstSep.Text[0].ToString();
@@ -225,7 +232,7 @@ namespace Cryptool
             {
                 tbSecondSep.Clear();
             }
-            if (tbFirstSep.Text.Length > 0 && tbFirstSep.Text.Length > 0)
+            else if (tbFirstSep.Text.Length > 0 && tbFirstSep.Text.Length > 0)
             {
                 c1 = tbFirstSep.Text[0];
                 c2 = tbSecondSep.Text[0];
@@ -262,6 +269,11 @@ namespace Cryptool
         {
             char c1 = 'X';
             char c2 = 'Y';
+            if (string.IsNullOrEmpty(tbSecondSep.Text))
+            {
+                tbSecondSep.Text = "Y";
+                return;
+            }
             if (tbSecondSep.Text.Length > 1)
             {
                 tbSecondSep.Text = tbSecondSep.Text[0].ToString();
@@ -271,7 +283,7 @@ namespace Cryptool
             {
                 tbSecondSep.Clear();
             }
-            if (tbFirstSep.Text.Length > 0 && tbFirstSep.Text.Length > 0)
+            else if (tbFirstSep.Text.Length > 0 && tbFirstSep.Text.Length > 0)
             {
                 c1 = tbFirstSep.Text[0];
                 c2 = tbSecondSep.Text[0];
@@ -370,6 +382,9 @@ namespace Cryptool
 
         private void btnOpen_Click(object sender, EventArgs e)
         {
+            int currentIndex = tctrlMain.SelectedIndex;
+            btnNew.PerformClick();
+
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
                 Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*",
@@ -380,11 +395,16 @@ namespace Cryptool
             {
                 try
                 {
-                    string fileContent = File.ReadAllText(openFileDialog.FileName);
-                    int currentIndex = tctrlMain.SelectedIndex;
+                    string content = File.ReadAllText(openFileDialog.FileName);
                     if (currentIndex == 0)
                     {
-                        rtbInputPlayfair.Text = fileContent;
+                        var keyMatch = Regex.Match(content, @"\{Key\}(.*?)(\n|$)", RegexOptions.Singleline);
+                        var messageMatch = Regex.Match(content, @"\{Message\}(.*?)(\n|$)", RegexOptions.Singleline);
+                        var resultMatch = Regex.Match(content, @"\n(.*)$", RegexOptions.Singleline);
+
+                        if (keyMatch.Success) rtbKeyPlayfair.Text = keyMatch.Groups[1].Value.Trim();
+                        if (messageMatch.Success) rtbInputPlayfair.Text = messageMatch.Groups[1].Value.Trim();
+                        if (resultMatch.Success) rtbResultPlayfair.Text = resultMatch.Groups[1].Value.Trim();
                     }
                     else if (currentIndex == 1) // Cần điền 
                     {
@@ -419,21 +439,20 @@ namespace Cryptool
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                saveFileDialog.Title = (currentIndex == 0)?"Playfair Save File":"";
+                saveFileDialog.Title = (currentIndex == 0)?"Playfair Save File":"RSA Save File";
                 saveFileDialog.DefaultExt = "txt";
                 saveFileDialog.AddExtension = true;
+                saveFileDialog.FileName = (currentIndex == 0) ? "Playfair_Save.txt" : "RSA_Save.txt";
 
                 if (saveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     try
                     {
-                        
                         string content = "";
                         if (currentIndex == 0)
                         {
                             content += "{Key}" + rtbKeyPlayfair.Text;
-                            content += "\n{Message}" + rtbInputPlayfair.Text;
-                            content += "\n{Cipher}" + rtbResultPlayfair.Text;
+                            content += "\n" + rtbResultPlayfair.Text;
                         }
                         else if (currentIndex == 1) 
                         {
@@ -506,36 +525,20 @@ namespace Cryptool
         }
         private void inittooltip()
         {
-            ToolTip tooltip = new ToolTip()
-            {
-                InitialDelay = 0,      // Hiển thị ngay lập tức
-                AutoPopDelay = 5000,   // Tự động ẩn sau 5 giây
-                ReshowDelay = 0        // Không có độ trễ khi hiển thị 
+            ToolTip tooltip = new ToolTip(){};
 
-            };
-
-            // Gắn thêm sự kiện MouseEnter và MouseLeave để hiển thị nhanh
-            textBox_P.MouseEnter += (s, e) => tooltip.Show("Nhập số nguyên tố P (P > 1).", textBox_P);
-            textBox_P.MouseLeave += (s, e) => tooltip.Hide(textBox_P);
-
-            textBox_Q.MouseEnter += (s, e) => tooltip.Show("Nhập số nguyên tố Q (Q > 1).", textBox_Q);
-            textBox_Q.MouseLeave += (s, e) => tooltip.Hide(textBox_Q);
-
-            textBox_E.MouseEnter += (s, e) => tooltip.Show("Nhập số nguyên E (1 < E < φ(N), và E phải nguyên tố cùng nhau với φ(N)).", textBox_E);
-            textBox_E.MouseLeave += (s, e) => tooltip.Hide(textBox_E);
-
-            textBox_D.MouseEnter += (s, e) => tooltip.Show("Nhập số nguyên D (D là nghịch đảo của E mod φ(N)).", textBox_D);
-            textBox_D.MouseLeave += (s, e) => tooltip.Hide(textBox_D);
-
-            textBox_N.MouseEnter += (s, e) => tooltip.Show("Giá trị N được tính tự động: N = P * Q.", textBox_N);
-            textBox_N.MouseLeave += (s, e) => tooltip.Hide(textBox_N);
-
-            textBox_phiN.MouseEnter += (s, e) => tooltip.Show("Giá trị φ(N) được tính tự động: φ(N) = (P-1) * (Q-1).", textBox_phiN);
-            textBox_phiN.MouseLeave += (s, e) => tooltip.Hide(textBox_phiN);
-
+            tooltip.IsBalloon = true;
+            tooltip.SetToolTip(plain_textbox,"Thông điệp gốc");
+            tooltip.SetToolTip(cipher_textbox,"Thông điệp mã hoá");
+            tooltip.SetToolTip(privatekeyTextbox,"Khoá bí mật");
+            tooltip.SetToolTip(publickeyTextbox,"Khoá công khai");
+            tooltip.SetToolTip(textBox_P, "Nhập số nguyên tố P (P > 1).");
+            tooltip.SetToolTip(textBox_Q, "Nhập số nguyên tố Q (Q > 1).");
+            tooltip.SetToolTip(textBox_E, "Nhập số nguyên E (1 < E < φ(N), và E phải nguyên tố cùng nhau với φ(N)).");
+            tooltip.SetToolTip(textBox_D, "Nhập số nguyên D (D là nghịch đảo của E mod φ(N)).");
+            tooltip.SetToolTip(textBox_N, "Giá trị N được tính tự động: N = P * Q.");
+            tooltip.SetToolTip(textBox_phiN, "Giá trị φ(N) được tính tự động: φ(N) = (P-1) * (Q-1).");
         }
-
-
 
         private void checkbox_auto_CheckedChanged(object sender, EventArgs e)
         {
@@ -545,6 +548,9 @@ namespace Cryptool
                 panel_manual.Visible = false;
                 showmessage("Chế độ tạo khoá tự động đã được chọn.");
                 isAutoMode = true;
+
+                radioButton1.Checked = true;
+                RadioButton_CheckedChanged(radioButton1, EventArgs.Empty);
             }
             else
             {
@@ -679,8 +685,6 @@ namespace Cryptool
             }
         }
 
-
-
         private string DecryptManual(string encryptedData, BigInteger d, BigInteger n)
         {
             try
@@ -701,7 +705,6 @@ namespace Cryptool
                 return null;
             }
         }
-
 
         private void button_encrypt_Click(object sender, EventArgs e)
         {
@@ -784,7 +787,6 @@ namespace Cryptool
                 }
             }
         }
-
 
         // Helper: Chèn xuống dòng để định dạng PEM
         private string InsertLineBreaks(string input, int lineLength = 64)
@@ -889,7 +891,5 @@ namespace Cryptool
         }
 
         #endregion
-
-
     }
 }
