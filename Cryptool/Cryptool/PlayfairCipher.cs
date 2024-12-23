@@ -11,17 +11,21 @@ namespace Cryptool
 {
     class PlayfairCipher
     {
-        string alphabet = "ABCDEFGHIKLMNOPQRSTUVWXYZ"; // Không có 'J'
+        string alphabetMain = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"; // Cho ma trận 5x5
+        string alphabet; // Cho ma trận 5x5
         string temp;
         string alphabet6 = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"; // Cho ma trận 6x6
         string temp6;
         char[,] matrixLayout; 
-        int version = 5; 
+        int version = 5;
+        char removeChar = 'J';
+        char replaceChar = 'I';
 
         public PlayfairCipher(char[,] matrixLayout = null, int version = 5)
         {
             this.matrixLayout = matrixLayout;
             this.version = version;
+            this.alphabet = alphabetMain.Replace(removeChar.ToString(), "");
             temp = alphabet;
             temp6 = alphabet6;
         }
@@ -83,7 +87,7 @@ namespace Cryptool
             key = RemoveDiacritics(key);
             if (version == 5)
             {
-                key = new string(key.Where(char.IsLetter).Select(char.ToUpper).Distinct().ToArray()).Replace('J', 'I');
+                key = new string(key.Where(char.IsLetter).Select(char.ToUpper).Distinct().ToArray()).Replace(removeChar, replaceChar);
 
             } else if(version == 6){
                 key = new string(key.Where(char.IsLetterOrDigit).Select(char.ToUpper).Distinct().ToArray());
@@ -126,7 +130,7 @@ namespace Cryptool
             mes = RemoveDiacritics(mes.ToUpper());
             if (version == 5)
             {
-                mes = new string(mes.Where(char.IsLetter).ToArray()).Replace('J', 'I');
+                mes = new string(mes.Where(char.IsLetter).ToArray()).Replace(removeChar, replaceChar);
             }
             else if (version == 6) {
                 mes = new string(mes.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray());
@@ -168,9 +172,9 @@ namespace Cryptool
         // Giải mã
         public string Decode(string mes)
         {
-            if (mes.Length % 2 == 1) return "- Mật mã có số lượng lẻ";
+            if (mes.Length % 2 == 1) return "- Mật mã có số lượng lẻ, không hợp lệ.";
             mes = RemoveDiacritics(mes);
-            mes = new string(mes.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray());
+            mes = new string(mes.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray()).Replace(removeChar, replaceChar);
 
             string result = "";
             for (int i = 0; i < mes.Length; i += 2)
@@ -189,6 +193,12 @@ namespace Cryptool
         {
             if (version == 5 || version == 6)
                 this.version = version;
+        }
+        public void setAlphabet(char removeChar = 'J', char replaceChar = 'I')
+        {
+            this.removeChar = removeChar;
+            this.replaceChar = replaceChar;
+            this.alphabet = alphabetMain.Replace(removeChar.ToString(), "");
         }
     }
 }

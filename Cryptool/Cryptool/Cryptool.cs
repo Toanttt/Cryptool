@@ -1,16 +1,11 @@
-﻿using System.Drawing.Drawing2D;
-using System;
-using System.Reflection.Metadata;
-using System.Windows.Forms;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
-
-namespace Cryptool
+﻿namespace Cryptool
 {
     public partial class Cryptool : Form
     {
         PlayfairCipher? cipher;
         char[,] matrixLayout;
         int version = 5; //playfair mặc định 5x5
+        ToolTip toolTip = new ToolTip();
 
         public Cryptool()
         {
@@ -20,19 +15,28 @@ namespace Cryptool
             InitMatrix(matrixLayout, '-');
             DisplayMatrix(matrixLayout);
             cbVersion.SelectedIndex = 0;
+            cb5x5.SelectedIndex = 0;
+            initToolTipPlayfair();
         }
 
         #region PlayFair
 
+        private void initToolTipPlayfair()
+        {
+            toolTip.IsBalloon = true;
+            toolTip.SetToolTip(rtbKeyPlayfair, "Nhập khoá.");
+            toolTip.SetToolTip(rtbInputPlayfair, "Nhập thông điệp cần giải mã");
+            toolTip.SetToolTip(cbChar,"Tích để tuỳ chỉnh ký tự");
+        }
         private void cbVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
             int version = cbVersion.SelectedItem.ToString() == "5x5" ? 5 : 6;
-            if(version == 6)
+            if (version == 6)
             {
                 cb5x5.Enabled = false;
-            } else if (version == 5)
+            }
+            else if (version == 5)
             {
-                cb5x5.SelectedIndex = 0;
                 cb5x5.Enabled = true;
             }
             cipher.setVersion(version);
@@ -120,15 +124,33 @@ namespace Cryptool
             }
 
             string input = rtbInputPlayfair.Text;
-            string result = cipher.Encode(input, firstSep, sencondSep);
+            string result = cipher.Encode(input, firstSep, sencondSep); // Hàm giải mã chính
             string[] resultString = result.Split(' ', 2);
-            rtbResultPlayfair.Text = splitPair(resultString[0]) + 
+            rtbResultPlayfair.Text = splitPair(resultString[0]) +
                 "\n" + splitPair(resultString[1]);
         }
 
-        static string splitPair(string input)
+        string splitPair(string input)
         {
             if (string.IsNullOrEmpty(input)) return string.Empty;
+            input = input.Replace(" ", "");
+
+
+            char removeChar = 'J';
+            char replaceChar = 'I';
+            if (string.IsNullOrEmpty(cb5x5.SelectedItem.ToString()))
+            {
+            }
+            else
+            {
+                removeChar = cb5x5.SelectedItem.ToString()[0];
+                replaceChar = cb5x5.SelectedItem.ToString()[5];
+            }
+
+            if (version == 5)
+            {
+                input = new string(input.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray()).Replace(removeChar, replaceChar);
+            }
             var result = new System.Text.StringBuilder();
 
             for (int i = 0; i < input.Length; i += 2)
@@ -143,7 +165,6 @@ namespace Cryptool
                 }
             }
 
-            // Xóa khoảng trắng cuối cùng
             return result.ToString().Trim();
         }
 
@@ -161,7 +182,7 @@ namespace Cryptool
                 result = splitPair(result);
             }
             string mes = splitPair(rtbInputPlayfair.Text.ToUpper());
-            rtbResultPlayfair.Text = mes + "\n" +result;
+            rtbResultPlayfair.Text = mes + "\n" + result;
         }
 
         private void rtbKey_ContentsResized(object sender, ContentsResizedEventArgs e)
@@ -337,10 +358,11 @@ namespace Cryptool
 
         private void btnSave_Click(object sender, EventArgs e)
         {
+            int currentIndex = tctrlMain.SelectedIndex;
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                saveFileDialog.Title = "Save Text File";
+                saveFileDialog.Title = (currentIndex == 0)?"Playfair Save File":"";
                 saveFileDialog.DefaultExt = "txt";
                 saveFileDialog.AddExtension = true;
 
@@ -348,13 +370,13 @@ namespace Cryptool
                 {
                     try
                     {
-                        int currentIndex = tctrlMain.SelectedIndex;
+                        
                         string content = "";
                         if (currentIndex == 0)
                         {
                             content += "{Key}" + rtbKeyPlayfair.Text;
-                            content += "{Message}"+rtbInputPlayfair.Text;
-                            content += "{Cipher}"+rtbResultPlayfair.Text;
+                            content += "\n{Message}" + rtbInputPlayfair.Text;
+                            content += "\n{Cipher}" + rtbResultPlayfair.Text;
                         }
                         else if (currentIndex == 1) // Cần điền 
                         {
@@ -374,5 +396,22 @@ namespace Cryptool
 
         #region RSA
         #endregion
+
+        private void cb5x5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            char removeChar = 'J';
+            char replaceChar = 'I';
+            removeChar = cb5x5.SelectedItem.ToString()[0];
+            replaceChar = cb5x5.SelectedItem.ToString()[5];
+            if (version == 5)
+            {
+                cipher.setAlphabet(removeChar,replaceChar);
+                string change = rtbKeyPlayfair.Text;
+                matrixLayout = cipher.createMatrix(change);
+                DisplayMatrix(matrixLayout);
+            }
+
+            toolTip.SetToolTip(cb5x5, "Ma trận 5x5 loại kí tự " + removeChar + " thay bằng kí tự " + replaceChar);
+        }
     }
 }
