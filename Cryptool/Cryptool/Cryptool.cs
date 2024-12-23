@@ -27,17 +27,30 @@
             toolTip.SetToolTip(rtbKeyPlayfair, "Nhập khoá.");
             toolTip.SetToolTip(rtbInputPlayfair, "Nhập thông điệp cần giải mã");
             toolTip.SetToolTip(cbChar,"Tích để tuỳ chỉnh ký tự");
+            char c1 = 'X';
+            char c2 = 'Y';
+
+            if (tbFirstSep.Text.Length > 0 || tbSecondSep.Text.Length > 0)
+            {
+                c1 = tbFirstSep.Text[0];
+                c2 = tbSecondSep.Text[0];
+            }
+            toolTip.SetToolTip(tbFirstSep, "Ví dụ: " + "UUF -> " + "U" + c1 + "UF");
+            toolTip.SetToolTip(tbSecondSep, "Ví dụ: " + c1 + c1 + " -> " + c1 + c2 +c1);
         }
         private void cbVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
             int version = cbVersion.SelectedItem.ToString() == "5x5" ? 5 : 6;
+            string type = "5x5: chỉ có chữ.";
             if (version == 6)
             {
                 cb5x5.Enabled = false;
+                type = "6x6: gồm chữ và số.";
             }
             else if (version == 5)
             {
                 cb5x5.Enabled = true;
+                type = "5x5: chỉ có chữ.";
             }
             cipher.setVersion(version);
             this.version = version;
@@ -47,6 +60,8 @@
             string change = rtbKeyPlayfair.Text;
             matrixLayout = cipher.createMatrix(change);
             DisplayMatrix(matrixLayout);
+
+            toolTip.SetToolTip(cbVersion, "Đang chọn version " + type);
         }
 
         private void InitMatrix(char[,] matrix, char defaultValue)
@@ -194,6 +209,8 @@
         // Ô ký tự trùng thứ nhất 
         private void tbFirstSep_TextChanged(object sender, EventArgs e)
         {
+            char c1 = 'X';
+            char c2 = 'Y';
             if (tbFirstSep.Text.Length > 1)
             {
                 tbFirstSep.Text = tbFirstSep.Text[0].ToString();
@@ -203,6 +220,15 @@
             {
                 tbSecondSep.Clear();
             }
+            if (tbFirstSep.Text.Length > 0 && tbFirstSep.Text.Length > 0)
+            {
+                c1 = tbFirstSep.Text[0];
+                c2 = tbSecondSep.Text[0];
+            }
+
+            toolTip.SetToolTip(tbFirstSep, "Ví dụ: " +  "UUF -> " + "U"+ c1 + "UF");
+            toolTip.SetToolTip(tbSecondSep, "Ví dụ: " + c1 + c1 + " -> " + c1 + c2 + c1);
+
         }
 
         private void tbFirstSep_KeyPress(object sender, KeyPressEventArgs e)
@@ -229,6 +255,8 @@
         // Ô ký tự trùng thứ hai
         private void tbSecondSep_TextChanged(object sender, EventArgs e)
         {
+            char c1 = 'X';
+            char c2 = 'Y';
             if (tbSecondSep.Text.Length > 1)
             {
                 tbSecondSep.Text = tbSecondSep.Text[0].ToString();
@@ -238,6 +266,13 @@
             {
                 tbSecondSep.Clear();
             }
+            if (tbFirstSep.Text.Length > 0 && tbFirstSep.Text.Length > 0)
+            {
+                c1 = tbFirstSep.Text[0];
+                c2 = tbSecondSep.Text[0];
+            }
+            toolTip.SetToolTip(tbFirstSep, "Ví dụ: " + "UUF -> " + "U" + c1 + "UF");
+            toolTip.SetToolTip(tbSecondSep, "Ví dụ: " + c1 + c1 + " -> " + c1 + c2 + c1);
         }
 
         private void tbSecondSep_KeyPress(object sender, KeyPressEventArgs e)
@@ -296,6 +331,23 @@
                     e.Handled = true;
                 }
             }
+        }
+
+        private void cb5x5_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            char removeChar = 'J';
+            char replaceChar = 'I';
+            removeChar = cb5x5.SelectedItem.ToString()[0];
+            replaceChar = cb5x5.SelectedItem.ToString()[5];
+            if (version == 5)
+            {
+                cipher.setAlphabet(removeChar, replaceChar);
+                string change = rtbKeyPlayfair.Text;
+                matrixLayout = cipher.createMatrix(change);
+                DisplayMatrix(matrixLayout);
+            }
+
+            toolTip.SetToolTip(cb5x5, "Ma trận 5x5 loại kí tự " + removeChar + " thay bằng kí tự " + replaceChar);
         }
         #endregion
 
@@ -397,21 +449,6 @@
         #region RSA
         #endregion
 
-        private void cb5x5_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            char removeChar = 'J';
-            char replaceChar = 'I';
-            removeChar = cb5x5.SelectedItem.ToString()[0];
-            replaceChar = cb5x5.SelectedItem.ToString()[5];
-            if (version == 5)
-            {
-                cipher.setAlphabet(removeChar,replaceChar);
-                string change = rtbKeyPlayfair.Text;
-                matrixLayout = cipher.createMatrix(change);
-                DisplayMatrix(matrixLayout);
-            }
 
-            toolTip.SetToolTip(cb5x5, "Ma trận 5x5 loại kí tự " + removeChar + " thay bằng kí tự " + replaceChar);
-        }
     }
 }
