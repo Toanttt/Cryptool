@@ -2,6 +2,7 @@
 using System;
 using System.Reflection.Metadata;
 using System.Windows.Forms;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Button;
 
 namespace Cryptool
 {
@@ -14,7 +15,6 @@ namespace Cryptool
         public Cryptool()
         {
             InitializeComponent();
-
             cipher = new PlayfairCipher();
             matrixLayout = new char[version, version];
             InitMatrix(matrixLayout, '-');
@@ -27,10 +27,19 @@ namespace Cryptool
         private void cbVersion_SelectedIndexChanged(object sender, EventArgs e)
         {
             int version = cbVersion.SelectedItem.ToString() == "5x5" ? 5 : 6;
+            if(version == 6)
+            {
+                cb5x5.Enabled = false;
+            } else if (version == 5)
+            {
+                cb5x5.SelectedIndex = 0;
+                cb5x5.Enabled = true;
+            }
             cipher.setVersion(version);
             this.version = version;
             matrixLayout = new char[version, version];
             InitMatrix(matrixLayout, '-');
+
             string change = rtbKeyPlayfair.Text;
             matrixLayout = cipher.createMatrix(change);
             DisplayMatrix(matrixLayout);
@@ -92,23 +101,67 @@ namespace Cryptool
             }
         }
 
-
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
-            string key = rtbKeyPlayfair.Text;
+            if (tbFirstSep.Text == "" || tbSecondSep.Text == "")
+            {
+                tbFirstSep.Text = "X";
+                tbSecondSep.Text = "Y";
+            }
+            bool isChecked = cbChar.Checked;
+            char firstSep = 'X';
+            char sencondSep = 'Y';
+            if (isChecked)
+            {
+                firstSep = tbFirstSep.Text.ToUpper()[0];
+                sencondSep = tbSecondSep.Text.ToUpper()[0];
+                tbFirstSep.Text = tbFirstSep.Text.ToUpper();
+                tbSecondSep.Text = tbSecondSep.Text.ToUpper();
+            }
+
             string input = rtbInputPlayfair.Text;
-            string result = cipher.Encode(input);
-            rtbResultPlayfair.Text = result;
-            DisplayMatrix(cipher.getMatrix());
+            string result = cipher.Encode(input, firstSep, sencondSep);
+            string[] resultString = result.Split(' ', 2);
+            rtbResultPlayfair.Text = splitPair(resultString[0]) + 
+                "\n" + splitPair(resultString[1]);
+        }
+
+        static string splitPair(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return string.Empty;
+            var result = new System.Text.StringBuilder();
+
+            for (int i = 0; i < input.Length; i += 2)
+            {
+                if (i + 1 < input.Length)
+                {
+                    result.Append(input[i]).Append(input[i + 1]).Append(" ");
+                }
+                else
+                {
+                    result.Append(input[i]).Append(" ");
+                }
+            }
+
+            // Xóa khoảng trắng cuối cùng
+            return result.ToString().Trim();
         }
 
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
-            string key = rtbKeyPlayfair.Text;
+            if (tbFirstSep.Text == "" || tbSecondSep.Text == "")
+            {
+                tbFirstSep.Text = "X";
+                tbSecondSep.Text = "Y";
+            }
             string input = rtbInputPlayfair.Text;
             string result = cipher.Decode(input);
-            rtbResultPlayfair.Text = result;
-            DisplayMatrix(cipher.getMatrix());
+            if (result[0] != '-')
+            {
+                result = splitPair(result);
+            }
+            string mes = splitPair(rtbInputPlayfair.Text.ToUpper());
+            rtbResultPlayfair.Text = mes + "\n" +result;
         }
 
         private void rtbKey_ContentsResized(object sender, ContentsResizedEventArgs e)
@@ -117,7 +170,112 @@ namespace Cryptool
             matrixLayout = cipher.createMatrix(change);
             DisplayMatrix(matrixLayout);
         }
+        // Ô ký tự trùng thứ nhất 
+        private void tbFirstSep_TextChanged(object sender, EventArgs e)
+        {
+            if (tbFirstSep.Text.Length > 1)
+            {
+                tbFirstSep.Text = tbFirstSep.Text[0].ToString();
+                tbFirstSep.SelectionStart = tbFirstSep.Text.Length;
+            }
+            if (tbSecondSep.Text == tbFirstSep.Text)
+            {
+                tbSecondSep.Clear();
+            }
+        }
 
+        private void tbFirstSep_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (version == 5)
+            {
+                if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+            else if (version == 6)
+            {
+                if (!char.IsLetterOrDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+            if (tbFirstSep.Text.Length == 1 && tbFirstSep.Text == tbSecondSep.Text)
+            {
+                e.Handled = true;
+            }
+        }
+        // Ô ký tự trùng thứ hai
+        private void tbSecondSep_TextChanged(object sender, EventArgs e)
+        {
+            if (tbSecondSep.Text.Length > 1)
+            {
+                tbSecondSep.Text = tbSecondSep.Text[0].ToString();
+                tbSecondSep.SelectionStart = tbSecondSep.Text.Length;
+            }
+            if (tbSecondSep.Text == tbFirstSep.Text)
+            {
+                tbSecondSep.Clear();
+            }
+        }
+
+        private void tbSecondSep_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (version == 5)
+            {
+                if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+            else if (version == 6)
+            {
+                if (!char.IsLetterOrDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+            if (tbFirstSep.Text.Length == 1 && tbFirstSep.Text == tbSecondSep.Text)
+            {
+                e.Handled = true;
+            }
+        }
+        // Xử lý textbox khoá và thông điệp 
+        private void rtbInputPlayfair_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (version == 5)
+            {
+                if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+            else if (version == 6)
+            {
+                if (!char.IsLetterOrDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+        }
+
+        private void rtbKeyPlayfair_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (version == 5)
+            {
+                if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+            else if (version == 6)
+            {
+                if (!char.IsLetterOrDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                {
+                    e.Handled = true;
+                }
+            }
+        }
         #endregion
 
         #region General
@@ -136,7 +294,7 @@ namespace Cryptool
         {
             OpenFileDialog openFileDialog = new OpenFileDialog
             {
-                Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*", 
+                Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*",
                 Title = "Chọn file văn bản"
             };
 
@@ -149,7 +307,8 @@ namespace Cryptool
                     if (currentIndex == 0)
                     {
                         rtbInputPlayfair.Text = fileContent;
-                    } else if (currentIndex == 1) // Cần điền 
+                    }
+                    else if (currentIndex == 1) // Cần điền 
                     {
 
                     }
@@ -163,16 +322,24 @@ namespace Cryptool
 
         private void btnNew_Click(object sender, EventArgs e)
         {
-            rtbInputPlayfair.Clear();
-            rtbKeyPlayfair.Clear();
-            rtbResultPlayfair.Clear();
+            int currentIndex = tctrlMain.SelectedIndex;
+            if (currentIndex == 0)
+            {
+                rtbInputPlayfair.Clear();
+                rtbKeyPlayfair.Clear();
+                rtbResultPlayfair.Clear();
+            }
+            else if (currentIndex == 1) // Cần điền 
+            {
+
+            }
         }
 
         private void btnSave_Click(object sender, EventArgs e)
         {
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
-                saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*"; 
+                saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
                 saveFileDialog.Title = "Save Text File";
                 saveFileDialog.DefaultExt = "txt";
                 saveFileDialog.AddExtension = true;
@@ -185,7 +352,9 @@ namespace Cryptool
                         string content = "";
                         if (currentIndex == 0)
                         {
-                            content = rtbResultPlayfair.Text;
+                            content += "{Key}" + rtbKeyPlayfair.Text;
+                            content += "{Message}"+rtbInputPlayfair.Text;
+                            content += "{Cipher}"+rtbResultPlayfair.Text;
                         }
                         else if (currentIndex == 1) // Cần điền 
                         {

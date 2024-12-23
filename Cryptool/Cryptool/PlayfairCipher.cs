@@ -72,17 +72,14 @@ namespace Cryptool
         public char[,] createMatrix(string key)
         {
             char[,] matrix = new char[version, version];
-            if (key == "" || key == null)
+            // Khi không có khoá trả về mảng có chuỗi bình thường
+            if (string.IsNullOrEmpty(key))
             {
-                if(version == 5)
-                { 
-                    ConvertToMatrix(temp, matrix);
-                } else if (version == 6)
-                {
-                    ConvertToMatrix(temp6, matrix);
-                }
+                string alphabetToUse = version == 5 ? temp : temp6;
+                ConvertToMatrix(alphabetToUse, matrix);
                 return matrix;
             }
+            // Bỏ ký tự tiếng việt
             key = RemoveDiacritics(key);
             if (version == 5)
             {
@@ -91,19 +88,12 @@ namespace Cryptool
             } else if(version == 6){
                 key = new string(key.Where(char.IsLetterOrDigit).Select(char.ToUpper).Distinct().ToArray());
             }
-
+            // Loại bỏ ký tự trùng lập
             string keyaf = new string(key.Distinct().ToArray());
-            string alphabetUpdated="";
 
-            if (version == 5)
-            {
-                alphabetUpdated = keyaf + new string(alphabet.Except(keyaf).ToArray());
-            }
-            else if (version == 6)
-            {
-                alphabetUpdated = keyaf + new string(alphabet6.Except(keyaf).ToArray());
-            }
-
+            string alphabetUpdated = version == 5
+                ? keyaf + new string(alphabet.Except(keyaf).ToArray())
+                : keyaf + new string(alphabet6.Except(keyaf).ToArray());
 
             ConvertToMatrix(alphabetUpdated, matrix);
             matrixLayout = matrix;
@@ -130,54 +120,55 @@ namespace Cryptool
         }
 
         // Xử lý thông điệp cần mã hoá
-        private string HandleMes(string input)
+        private string HandleMes(string mes, char firstSep = 'X', char secondSep = 'Y')
         {
-            input = RemoveDiacritics(input.ToUpper());
+            // Bỏ các ký tự tiếng việt
+            mes = RemoveDiacritics(mes.ToUpper());
             if (version == 5)
             {
-                input = new string(input.Where(char.IsLetter).ToArray()).Replace('J', 'I');
+                mes = new string(mes.Where(char.IsLetter).ToArray()).Replace('J', 'I');
             }
             else if (version == 6) {
-                input = new string(input.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray());
+                mes = new string(mes.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray());
             }
 
             StringBuilder result = new StringBuilder();
-
-            for (int i = 0; i < input.Length; i++)
+            for (int i = 0; i < mes.Length; i++)
             {
                 // Lấy chữ đầu tiên
-                char currentChar = input[i];
+                char currentChar = mes[i];
                 result.Append(currentChar);
 
-                if (i < input.Length - 1 && input[i] == input[i + 1])
+                if (i < mes.Length - 1 && mes[i] == mes[i + 1])
                 {
-                    result.Append(currentChar == 'X' ? 'Y' : 'X');
+                    result.Append(currentChar == firstSep ? secondSep : firstSep);
                 }
             }
 
+            // Trả chuỗi sau khi xử lý
             if (result.Length % 2 == 1)
             {
-                result.Append(result[result.Length - 1] == 'X' ? 'Y' : 'X');
+                result.Append(result[result.Length - 1] == firstSep ? secondSep : firstSep);
             }
             return result.ToString();
         }
 
         // Mã hoá 
-        public string Encode(string mes)
+        public string Encode(string mes, char firstSep = 'X', char secondSep = 'Y')
         {
-            mes = HandleMes(mes);
+            mes = HandleMes(mes, firstSep, secondSep);
             // Ra kết quả
             string result = "";
             for (int i = 0; i < mes.Length; i += 2)
                 result += GetPairEncode(mes[i], mes[i + 1], matrixLayout);
 
-            return result.ToUpper();
+            return mes + " " +result.ToUpper() ;
         }
 
         // Giải mã
         public string Decode(string mes)
         {
-            if (mes.Length % 2 == 1) return "Mật mã có số lượng lẻ";
+            if (mes.Length % 2 == 1) return "- Mật mã có số lượng lẻ";
             mes = RemoveDiacritics(mes);
             mes = new string(mes.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray());
 
