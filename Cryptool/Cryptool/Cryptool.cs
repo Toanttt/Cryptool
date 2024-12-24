@@ -12,6 +12,7 @@ namespace Cryptool
         int version = 5; //playfair mặc định 5x5
         ToolTip toolTip = new ToolTip();
         private bool isAutoMode = false;
+        private Listkey listKeyForm;
 
         public Cryptool()
         {
@@ -960,5 +961,38 @@ namespace Cryptool
         }
         #endregion
 
+        private void button_listkey_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra nếu form chưa được tạo
+            if (listKeyForm == null || listKeyForm.IsDisposed)
+            {
+                listKeyForm = new Listkey();
+            }
+
+            // Hiển thị form Listkey
+            listKeyForm.Show();
+        }
+
+
+        private void button_savekey_Click(object sender, EventArgs e)
+        {
+            // Kiểm tra nếu form Listkey đã được tạo
+            if (listKeyForm != null && !listKeyForm.IsDisposed)
+            {
+                // Lấy dữ liệu khóa (giả sử bạn đã có khóa publicKey và privateKey)
+                string publicKey = publickeyTextbox.Text;
+                string privateKey = privatekeyTextbox.Text;
+
+                // Thêm dữ liệu vào form Listkey
+                listKeyForm.AddKey(publicKey, privateKey);
+
+                // Thông báo thành công
+                MessageBox.Show("Khóa đã được lưu vào danh sách.", "Thành công", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            }
+            else
+            {
+                MessageBox.Show("Danh sách khóa chưa được mở.", "Lỗi", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
     }
 }

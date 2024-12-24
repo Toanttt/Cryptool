@@ -58,6 +58,13 @@
             rtbKeyPlayfair = new RichTextBox();
             label11 = new Label();
             tabRSA = new TabPage();
+            resultPanel = new Panel();
+            label_message = new Label();
+            button_decrypt = new Button();
+            button_encrypt = new Button();
+            cipher_textbox = new RichTextBox();
+            label3 = new Label();
+            panel_auto = new Panel();
             panel_manual = new Panel();
             sug_3 = new Label();
             sug_2 = new Label();
@@ -75,13 +82,8 @@
             textBox_P = new TextBox();
             label5 = new Label();
             label6 = new Label();
-            resultPanel = new Panel();
-            label_message = new Label();
-            button_decrypt = new Button();
-            button_encrypt = new Button();
-            cipher_textbox = new RichTextBox();
-            label3 = new Label();
-            panel_auto = new Panel();
+            button_savekey = new Button();
+            button_listkey = new Button();
             radioButton3 = new RadioButton();
             radioButton4 = new RadioButton();
             radioButton2 = new RadioButton();
@@ -100,9 +102,9 @@
             gbOption.SuspendLayout();
             panel3.SuspendLayout();
             tabRSA.SuspendLayout();
-            panel_manual.SuspendLayout();
             resultPanel.SuspendLayout();
             panel_auto.SuspendLayout();
+            panel_manual.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -123,11 +125,11 @@
             // 
             label1.AutoSize = true;
             label1.BackColor = Color.Transparent;
-            label1.Font = new Font("Segoe UI Emoji", 21.75F, FontStyle.Bold, GraphicsUnit.Point, 0);
+            label1.Font = new Font("Segoe UI Emoji", 21F, FontStyle.Bold);
             label1.ForeColor = Color.White;
-            label1.Location = new Point(0, 1);
+            label1.Location = new Point(0, -6);
             label1.Name = "label1";
-            label1.Size = new Size(246, 38);
+            label1.Size = new Size(296, 47);
             label1.TabIndex = 6;
             label1.Text = "PlayRSA Tool 🔔";
             // 
@@ -196,11 +198,11 @@
             tabPlayfair.Controls.Add(panel3);
             tabPlayfair.Controls.Add(rtbKeyPlayfair);
             tabPlayfair.Controls.Add(label11);
-            tabPlayfair.Location = new Point(4, 26);
+            tabPlayfair.Location = new Point(4, 32);
             tabPlayfair.Margin = new Padding(3, 2, 3, 2);
             tabPlayfair.Name = "tabPlayfair";
             tabPlayfair.Padding = new Padding(3, 2, 3, 2);
-            tabPlayfair.Size = new Size(791, 605);
+            tabPlayfair.Size = new Size(791, 599);
             tabPlayfair.TabIndex = 0;
             tabPlayfair.Text = "Playfair";
             tabPlayfair.Click += tabPage1_Click;
@@ -236,9 +238,9 @@
             cb5x5.DropDownStyle = ComboBoxStyle.DropDownList;
             cb5x5.FormattingEnabled = true;
             cb5x5.Items.AddRange(new object[] { "J -> I", "Q -> Z", "V -> U", "W -> V", "Z -> Y", "K -> C" });
-            cb5x5.Location = new Point(180, 142);
+            cb5x5.Location = new Point(193, 142);
             cb5x5.Name = "cb5x5";
-            cb5x5.Size = new Size(121, 25);
+            cb5x5.Size = new Size(121, 31);
             cb5x5.TabIndex = 30;
             cb5x5.SelectedIndexChanged += cb5x5_SelectedIndexChanged;
             // 
@@ -248,7 +250,7 @@
             cbChar.BackgroundImageLayout = ImageLayout.None;
             cbChar.Location = new Point(17, 26);
             cbChar.Name = "cbChar";
-            cbChar.Size = new Size(284, 23);
+            cbChar.Size = new Size(351, 27);
             cbChar.TabIndex = 29;
             cbChar.Text = "Chọn ký tự tách trùng lặp (mặc định: X, Y)";
             cbChar.UseVisualStyleBackColor = true;
@@ -256,9 +258,9 @@
             // tbFirstSep
             // 
             tbFirstSep.BorderStyle = BorderStyle.FixedSingle;
-            tbFirstSep.Location = new Point(192, 62);
+            tbFirstSep.Location = new Point(218, 61);
             tbFirstSep.Name = "tbFirstSep";
-            tbFirstSep.Size = new Size(28, 25);
+            tbFirstSep.Size = new Size(28, 30);
             tbFirstSep.TabIndex = 28;
             tbFirstSep.Text = "X";
             tbFirstSep.TextAlign = HorizontalAlignment.Center;
@@ -268,9 +270,9 @@
             // tbSecondSep
             // 
             tbSecondSep.BorderStyle = BorderStyle.FixedSingle;
-            tbSecondSep.Location = new Point(192, 100);
+            tbSecondSep.Location = new Point(218, 100);
             tbSecondSep.Name = "tbSecondSep";
-            tbSecondSep.Size = new Size(28, 25);
+            tbSecondSep.Size = new Size(28, 30);
             tbSecondSep.TabIndex = 28;
             tbSecondSep.Text = "Y";
             tbSecondSep.TextAlign = HorizontalAlignment.Center;
@@ -282,7 +284,7 @@
             label13.AutoSize = true;
             label13.Location = new Point(11, 63);
             label13.Name = "label13";
-            label13.Size = new Size(160, 19);
+            label13.Size = new Size(201, 23);
             label13.TabIndex = 24;
             label13.Text = "Kí tự phân cách đầu tiên:";
             // 
@@ -291,7 +293,7 @@
             label14.AutoSize = true;
             label14.Location = new Point(11, 145);
             label14.Name = "label14";
-            label14.Size = new Size(144, 19);
+            label14.Size = new Size(176, 23);
             label14.TabIndex = 24;
             label14.Text = "Loại bỏ ký tự cho 5x5:";
             // 
@@ -300,7 +302,7 @@
             label9.AutoSize = true;
             label9.Location = new Point(11, 102);
             label9.Name = "label9";
-            label9.Size = new Size(150, 19);
+            label9.Size = new Size(188, 23);
             label9.TabIndex = 24;
             label9.Text = "Dấu phân cách thứ hai:";
             // 
@@ -311,7 +313,7 @@
             cbVersion.Location = new Point(547, 11);
             cbVersion.Margin = new Padding(3, 2, 3, 2);
             cbVersion.Name = "cbVersion";
-            cbVersion.Size = new Size(133, 25);
+            cbVersion.Size = new Size(133, 31);
             cbVersion.TabIndex = 27;
             cbVersion.SelectedIndexChanged += cbVersion_SelectedIndexChanged;
             // 
@@ -351,7 +353,7 @@
             label8.AutoSize = true;
             label8.Location = new Point(350, 43);
             label8.Name = "label8";
-            label8.Size = new Size(0, 19);
+            label8.Size = new Size(0, 23);
             label8.TabIndex = 24;
             // 
             // label12
@@ -359,14 +361,14 @@
             label12.AutoSize = true;
             label12.Location = new Point(27, 64);
             label12.Name = "label12";
-            label12.Size = new Size(63, 19);
+            label12.Size = new Size(76, 23);
             label12.TabIndex = 24;
             label12.Text = "Message";
             // 
             // btnDecryptPlayfair
             // 
             btnDecryptPlayfair.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnDecryptPlayfair.Location = new Point(131, 542);
+            btnDecryptPlayfair.Location = new Point(131, 536);
             btnDecryptPlayfair.Margin = new Padding(3, 2, 3, 2);
             btnDecryptPlayfair.Name = "btnDecryptPlayfair";
             btnDecryptPlayfair.Size = new Size(100, 56);
@@ -378,7 +380,7 @@
             // btnEncryptPlayfair
             // 
             btnEncryptPlayfair.Anchor = AnchorStyles.Bottom | AnchorStyles.Left;
-            btnEncryptPlayfair.Location = new Point(25, 542);
+            btnEncryptPlayfair.Location = new Point(25, 536);
             btnEncryptPlayfair.Margin = new Padding(3, 2, 3, 2);
             btnEncryptPlayfair.Name = "btnEncryptPlayfair";
             btnEncryptPlayfair.Size = new Size(100, 56);
@@ -392,7 +394,7 @@
             label7.AutoSize = true;
             label7.Location = new Point(460, 13);
             label7.Name = "label7";
-            label7.Size = new Size(48, 19);
+            label7.Size = new Size(58, 23);
             label7.TabIndex = 20;
             label7.Text = "Matrix";
             // 
@@ -424,7 +426,7 @@
             label10.Font = new Font("Segoe UI", 9F, FontStyle.Bold, GraphicsUnit.Point, 0);
             label10.Location = new Point(17, 0);
             label10.Name = "label10";
-            label10.Size = new Size(49, 15);
+            label10.Size = new Size(62, 20);
             label10.TabIndex = 8;
             label10.Text = "RESULT";
             // 
@@ -445,14 +447,13 @@
             label11.AutoSize = true;
             label11.Location = new Point(27, 11);
             label11.Name = "label11";
-            label11.Size = new Size(75, 19);
+            label11.Size = new Size(92, 23);
             label11.TabIndex = 17;
             label11.Text = "Cipher Key";
             // 
             // tabRSA
             // 
             tabRSA.BackColor = Color.White;
-            tabRSA.Controls.Add(panel_manual);
             tabRSA.Controls.Add(resultPanel);
             tabRSA.Controls.Add(button_decrypt);
             tabRSA.Controls.Add(button_encrypt);
@@ -462,188 +463,14 @@
             tabRSA.Controls.Add(plain_textbox);
             tabRSA.Controls.Add(label21);
             tabRSA.Controls.Add(checkBox_auto);
-            tabRSA.Location = new Point(4, 26);
+            tabRSA.Location = new Point(4, 32);
             tabRSA.Margin = new Padding(3, 2, 3, 2);
             tabRSA.Name = "tabRSA";
             tabRSA.Padding = new Padding(3, 2, 3, 2);
-            tabRSA.Size = new Size(791, 605);
+            tabRSA.Size = new Size(791, 599);
             tabRSA.TabIndex = 1;
             tabRSA.Text = "RSA";
             tabRSA.Click += tabPage2_Click;
-            // 
-            // panel_manual
-            // 
-            panel_manual.BackColor = Color.White;
-            panel_manual.Controls.Add(sug_3);
-            panel_manual.Controls.Add(sug_2);
-            panel_manual.Controls.Add(sug_1);
-            panel_manual.Controls.Add(textBox_D);
-            panel_manual.Controls.Add(label16);
-            panel_manual.Controls.Add(textBox_phiN);
-            panel_manual.Controls.Add(label17);
-            panel_manual.Controls.Add(textBox_E);
-            panel_manual.Controls.Add(label15);
-            panel_manual.Controls.Add(textBox_N);
-            panel_manual.Controls.Add(label2);
-            panel_manual.Controls.Add(textBox_Q);
-            panel_manual.Controls.Add(label4);
-            panel_manual.Controls.Add(textBox_P);
-            panel_manual.Controls.Add(label5);
-            panel_manual.Controls.Add(label6);
-            panel_manual.Location = new Point(18, 223);
-            panel_manual.Margin = new Padding(3, 2, 3, 2);
-            panel_manual.Name = "panel_manual";
-            panel_manual.Size = new Size(767, 282);
-            panel_manual.TabIndex = 18;
-            // 
-            // sug_3
-            // 
-            sug_3.AutoSize = true;
-            sug_3.Location = new Point(641, 189);
-            sug_3.Name = "sug_3";
-            sug_3.Size = new Size(53, 19);
-            sug_3.TabIndex = 35;
-            sug_3.Text = "label22";
-            // 
-            // sug_2
-            // 
-            sug_2.AutoSize = true;
-            sug_2.Location = new Point(641, 159);
-            sug_2.Name = "sug_2";
-            sug_2.Size = new Size(53, 19);
-            sug_2.TabIndex = 35;
-            sug_2.Text = "label22";
-            // 
-            // sug_1
-            // 
-            sug_1.AutoSize = true;
-            sug_1.Location = new Point(641, 129);
-            sug_1.Name = "sug_1";
-            sug_1.Size = new Size(53, 19);
-            sug_1.TabIndex = 35;
-            sug_1.Text = "label22";
-            // 
-            // textBox_D
-            // 
-            textBox_D.BorderStyle = BorderStyle.FixedSingle;
-            textBox_D.Location = new Point(372, 220);
-            textBox_D.Margin = new Padding(3, 2, 3, 2);
-            textBox_D.Name = "textBox_D";
-            textBox_D.Size = new Size(213, 25);
-            textBox_D.TabIndex = 34;
-            // 
-            // label16
-            // 
-            label16.AutoSize = true;
-            label16.Location = new Point(372, 189);
-            label16.Name = "label16";
-            label16.Size = new Size(91, 19);
-            label16.TabIndex = 33;
-            label16.Text = "Private Key D";
-            // 
-            // textBox_phiN
-            // 
-            textBox_phiN.BackColor = Color.White;
-            textBox_phiN.BorderStyle = BorderStyle.FixedSingle;
-            textBox_phiN.Location = new Point(372, 153);
-            textBox_phiN.Margin = new Padding(3, 2, 3, 2);
-            textBox_phiN.Name = "textBox_phiN";
-            textBox_phiN.ReadOnly = true;
-            textBox_phiN.Size = new Size(216, 25);
-            textBox_phiN.TabIndex = 32;
-            // 
-            // label17
-            // 
-            label17.AutoSize = true;
-            label17.Location = new Point(372, 122);
-            label17.Name = "label17";
-            label17.Size = new Size(126, 19);
-            label17.TabIndex = 31;
-            label17.Text = "Euler's Totient φ(N)";
-            // 
-            // textBox_E
-            // 
-            textBox_E.BackColor = Color.White;
-            textBox_E.BorderStyle = BorderStyle.FixedSingle;
-            textBox_E.Location = new Point(19, 153);
-            textBox_E.Margin = new Padding(3, 2, 3, 2);
-            textBox_E.Name = "textBox_E";
-            textBox_E.Size = new Size(216, 25);
-            textBox_E.TabIndex = 28;
-            // 
-            // label15
-            // 
-            label15.AutoSize = true;
-            label15.Location = new Point(19, 122);
-            label15.Name = "label15";
-            label15.Size = new Size(16, 19);
-            label15.TabIndex = 27;
-            label15.Text = "E";
-            // 
-            // textBox_N
-            // 
-            textBox_N.BackColor = Color.White;
-            textBox_N.BorderStyle = BorderStyle.FixedSingle;
-            textBox_N.Location = new Point(19, 220);
-            textBox_N.Margin = new Padding(3, 2, 3, 2);
-            textBox_N.Name = "textBox_N";
-            textBox_N.ReadOnly = true;
-            textBox_N.Size = new Size(216, 25);
-            textBox_N.TabIndex = 26;
-            // 
-            // label2
-            // 
-            label2.AutoSize = true;
-            label2.Location = new Point(19, 189);
-            label2.Name = "label2";
-            label2.Size = new Size(19, 19);
-            label2.TabIndex = 25;
-            label2.Text = "N";
-            // 
-            // textBox_Q
-            // 
-            textBox_Q.BorderStyle = BorderStyle.FixedSingle;
-            textBox_Q.Location = new Point(372, 79);
-            textBox_Q.Margin = new Padding(3, 2, 3, 2);
-            textBox_Q.Name = "textBox_Q";
-            textBox_Q.Size = new Size(216, 25);
-            textBox_Q.TabIndex = 24;
-            // 
-            // label4
-            // 
-            label4.AutoSize = true;
-            label4.Location = new Point(372, 49);
-            label4.Name = "label4";
-            label4.Size = new Size(79, 19);
-            label4.TabIndex = 23;
-            label4.Text = "Prime 2 (Q)";
-            // 
-            // textBox_P
-            // 
-            textBox_P.BorderStyle = BorderStyle.FixedSingle;
-            textBox_P.Location = new Point(19, 79);
-            textBox_P.Margin = new Padding(3, 2, 3, 2);
-            textBox_P.Name = "textBox_P";
-            textBox_P.Size = new Size(216, 25);
-            textBox_P.TabIndex = 22;
-            // 
-            // label5
-            // 
-            label5.AutoSize = true;
-            label5.Location = new Point(19, 47);
-            label5.Name = "label5";
-            label5.Size = new Size(76, 19);
-            label5.TabIndex = 18;
-            label5.Text = "Prime 1 (P)";
-            // 
-            // label6
-            // 
-            label6.AutoSize = true;
-            label6.Location = new Point(15, 9);
-            label6.Name = "label6";
-            label6.Size = new Size(117, 19);
-            label6.TabIndex = 8;
-            label6.Text = "Key Management";
             // 
             // resultPanel
             // 
@@ -660,7 +487,7 @@
             label_message.AutoSize = true;
             label_message.Location = new Point(4, 5);
             label_message.Name = "label_message";
-            label_message.Size = new Size(171, 19);
+            label_message.Size = new Size(212, 23);
             label_message.TabIndex = 0;
             label_message.Text = "Đã chọn tự động tạo khoá";
             // 
@@ -699,13 +526,16 @@
             label3.AutoSize = true;
             label3.Location = new Point(412, 4);
             label3.Name = "label3";
-            label3.Size = new Size(77, 19);
+            label3.Size = new Size(95, 23);
             label3.TabIndex = 25;
             label3.Text = "Cipher Text";
             // 
             // panel_auto
             // 
             panel_auto.BackColor = Color.White;
+            panel_auto.Controls.Add(panel_manual);
+            panel_auto.Controls.Add(button_savekey);
+            panel_auto.Controls.Add(button_listkey);
             panel_auto.Controls.Add(radioButton3);
             panel_auto.Controls.Add(radioButton4);
             panel_auto.Controls.Add(radioButton2);
@@ -721,13 +551,207 @@
             panel_auto.Size = new Size(765, 282);
             panel_auto.TabIndex = 24;
             // 
+            // panel_manual
+            // 
+            panel_manual.BackColor = Color.White;
+            panel_manual.Controls.Add(sug_3);
+            panel_manual.Controls.Add(sug_2);
+            panel_manual.Controls.Add(sug_1);
+            panel_manual.Controls.Add(textBox_D);
+            panel_manual.Controls.Add(label16);
+            panel_manual.Controls.Add(textBox_phiN);
+            panel_manual.Controls.Add(label17);
+            panel_manual.Controls.Add(textBox_E);
+            panel_manual.Controls.Add(label15);
+            panel_manual.Controls.Add(textBox_N);
+            panel_manual.Controls.Add(label2);
+            panel_manual.Controls.Add(textBox_Q);
+            panel_manual.Controls.Add(label4);
+            panel_manual.Controls.Add(textBox_P);
+            panel_manual.Controls.Add(label5);
+            panel_manual.Controls.Add(label6);
+            panel_manual.Location = new Point(0, 2);
+            panel_manual.Margin = new Padding(3, 2, 3, 2);
+            panel_manual.Name = "panel_manual";
+            panel_manual.Size = new Size(767, 282);
+            panel_manual.TabIndex = 18;
+            // 
+            // sug_3
+            // 
+            sug_3.AutoSize = true;
+            sug_3.Location = new Point(641, 189);
+            sug_3.Name = "sug_3";
+            sug_3.Size = new Size(64, 23);
+            sug_3.TabIndex = 35;
+            sug_3.Text = "label22";
+            // 
+            // sug_2
+            // 
+            sug_2.AutoSize = true;
+            sug_2.Location = new Point(641, 159);
+            sug_2.Name = "sug_2";
+            sug_2.Size = new Size(64, 23);
+            sug_2.TabIndex = 35;
+            sug_2.Text = "label22";
+            // 
+            // sug_1
+            // 
+            sug_1.AutoSize = true;
+            sug_1.Location = new Point(641, 129);
+            sug_1.Name = "sug_1";
+            sug_1.Size = new Size(64, 23);
+            sug_1.TabIndex = 35;
+            sug_1.Text = "label22";
+            // 
+            // textBox_D
+            // 
+            textBox_D.BorderStyle = BorderStyle.FixedSingle;
+            textBox_D.Location = new Point(372, 220);
+            textBox_D.Margin = new Padding(3, 2, 3, 2);
+            textBox_D.Name = "textBox_D";
+            textBox_D.Size = new Size(213, 30);
+            textBox_D.TabIndex = 34;
+            // 
+            // label16
+            // 
+            label16.AutoSize = true;
+            label16.Location = new Point(372, 189);
+            label16.Name = "label16";
+            label16.Size = new Size(111, 23);
+            label16.TabIndex = 33;
+            label16.Text = "Private Key D";
+            // 
+            // textBox_phiN
+            // 
+            textBox_phiN.BackColor = Color.White;
+            textBox_phiN.BorderStyle = BorderStyle.FixedSingle;
+            textBox_phiN.Location = new Point(372, 153);
+            textBox_phiN.Margin = new Padding(3, 2, 3, 2);
+            textBox_phiN.Name = "textBox_phiN";
+            textBox_phiN.ReadOnly = true;
+            textBox_phiN.Size = new Size(216, 30);
+            textBox_phiN.TabIndex = 32;
+            // 
+            // label17
+            // 
+            label17.AutoSize = true;
+            label17.Location = new Point(372, 122);
+            label17.Name = "label17";
+            label17.Size = new Size(156, 23);
+            label17.TabIndex = 31;
+            label17.Text = "Euler's Totient φ(N)";
+            // 
+            // textBox_E
+            // 
+            textBox_E.BackColor = Color.White;
+            textBox_E.BorderStyle = BorderStyle.FixedSingle;
+            textBox_E.Location = new Point(19, 153);
+            textBox_E.Margin = new Padding(3, 2, 3, 2);
+            textBox_E.Name = "textBox_E";
+            textBox_E.Size = new Size(216, 30);
+            textBox_E.TabIndex = 28;
+            // 
+            // label15
+            // 
+            label15.AutoSize = true;
+            label15.Location = new Point(19, 122);
+            label15.Name = "label15";
+            label15.Size = new Size(19, 23);
+            label15.TabIndex = 27;
+            label15.Text = "E";
+            // 
+            // textBox_N
+            // 
+            textBox_N.BackColor = Color.White;
+            textBox_N.BorderStyle = BorderStyle.FixedSingle;
+            textBox_N.Location = new Point(19, 220);
+            textBox_N.Margin = new Padding(3, 2, 3, 2);
+            textBox_N.Name = "textBox_N";
+            textBox_N.ReadOnly = true;
+            textBox_N.Size = new Size(216, 30);
+            textBox_N.TabIndex = 26;
+            // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Location = new Point(19, 189);
+            label2.Name = "label2";
+            label2.Size = new Size(23, 23);
+            label2.TabIndex = 25;
+            label2.Text = "N";
+            // 
+            // textBox_Q
+            // 
+            textBox_Q.BorderStyle = BorderStyle.FixedSingle;
+            textBox_Q.Location = new Point(372, 79);
+            textBox_Q.Margin = new Padding(3, 2, 3, 2);
+            textBox_Q.Name = "textBox_Q";
+            textBox_Q.Size = new Size(216, 30);
+            textBox_Q.TabIndex = 24;
+            // 
+            // label4
+            // 
+            label4.AutoSize = true;
+            label4.Location = new Point(372, 49);
+            label4.Name = "label4";
+            label4.Size = new Size(96, 23);
+            label4.TabIndex = 23;
+            label4.Text = "Prime 2 (Q)";
+            // 
+            // textBox_P
+            // 
+            textBox_P.BorderStyle = BorderStyle.FixedSingle;
+            textBox_P.Location = new Point(19, 79);
+            textBox_P.Margin = new Padding(3, 2, 3, 2);
+            textBox_P.Name = "textBox_P";
+            textBox_P.Size = new Size(216, 30);
+            textBox_P.TabIndex = 22;
+            // 
+            // label5
+            // 
+            label5.AutoSize = true;
+            label5.Location = new Point(19, 47);
+            label5.Name = "label5";
+            label5.Size = new Size(93, 23);
+            label5.TabIndex = 18;
+            label5.Text = "Prime 1 (P)";
+            // 
+            // label6
+            // 
+            label6.AutoSize = true;
+            label6.Location = new Point(15, 9);
+            label6.Name = "label6";
+            label6.Size = new Size(144, 23);
+            label6.TabIndex = 8;
+            label6.Text = "Key Management";
+            // 
+            // button_savekey
+            // 
+            button_savekey.Location = new Point(394, 245);
+            button_savekey.Name = "button_savekey";
+            button_savekey.Size = new Size(94, 29);
+            button_savekey.TabIndex = 21;
+            button_savekey.Text = "Save";
+            button_savekey.UseVisualStyleBackColor = true;
+            button_savekey.Click += button_savekey_Click;
+            // 
+            // button_listkey
+            // 
+            button_listkey.Location = new Point(503, 245);
+            button_listkey.Name = "button_listkey";
+            button_listkey.Size = new Size(94, 29);
+            button_listkey.TabIndex = 21;
+            button_listkey.Text = "Show list";
+            button_listkey.UseVisualStyleBackColor = true;
+            button_listkey.Click += button_listkey_Click;
+            // 
             // radioButton3
             // 
             radioButton3.AutoSize = true;
-            radioButton3.Location = new Point(168, 244);
+            radioButton3.Location = new Point(198, 244);
             radioButton3.Margin = new Padding(3, 2, 3, 2);
             radioButton3.Name = "radioButton3";
-            radioButton3.Size = new Size(79, 23);
+            radioButton3.Size = new Size(92, 27);
             radioButton3.TabIndex = 20;
             radioButton3.TabStop = true;
             radioButton3.Text = "2048 bit";
@@ -736,10 +760,10 @@
             // radioButton4
             // 
             radioButton4.AutoSize = true;
-            radioButton4.Location = new Point(254, 244);
+            radioButton4.Location = new Point(296, 245);
             radioButton4.Margin = new Padding(3, 2, 3, 2);
             radioButton4.Name = "radioButton4";
-            radioButton4.Size = new Size(79, 23);
+            radioButton4.Size = new Size(92, 27);
             radioButton4.TabIndex = 19;
             radioButton4.TabStop = true;
             radioButton4.Text = "4096 bit";
@@ -748,10 +772,10 @@
             // radioButton2
             // 
             radioButton2.AutoSize = true;
-            radioButton2.Location = new Point(89, 244);
+            radioButton2.Location = new Point(106, 244);
             radioButton2.Margin = new Padding(3, 2, 3, 2);
             radioButton2.Name = "radioButton2";
-            radioButton2.Size = new Size(79, 23);
+            radioButton2.Size = new Size(92, 27);
             radioButton2.TabIndex = 18;
             radioButton2.TabStop = true;
             radioButton2.Text = "1024 bit";
@@ -763,7 +787,7 @@
             radioButton1.Location = new Point(17, 244);
             radioButton1.Margin = new Padding(3, 2, 3, 2);
             radioButton1.Name = "radioButton1";
-            radioButton1.Size = new Size(71, 23);
+            radioButton1.Size = new Size(83, 27);
             radioButton1.TabIndex = 17;
             radioButton1.Text = "512 bit";
             radioButton1.UseVisualStyleBackColor = true;
@@ -785,7 +809,7 @@
             label18.AutoSize = true;
             label18.Location = new Point(372, 29);
             label18.Name = "label18";
-            label18.Size = new Size(77, 19);
+            label18.Size = new Size(94, 23);
             label18.TabIndex = 15;
             label18.Text = "Private Key";
             // 
@@ -807,7 +831,7 @@
             label19.AutoSize = true;
             label19.Location = new Point(24, 29);
             label19.Name = "label19";
-            label19.Size = new Size(71, 19);
+            label19.Size = new Size(88, 23);
             label19.TabIndex = 9;
             label19.Text = "Public Key";
             // 
@@ -816,7 +840,7 @@
             label20.AutoSize = true;
             label20.Location = new Point(15, 0);
             label20.Name = "label20";
-            label20.Size = new Size(117, 19);
+            label20.Size = new Size(144, 23);
             label20.TabIndex = 8;
             label20.Text = "Key Management";
             // 
@@ -835,7 +859,7 @@
             label21.AutoSize = true;
             label21.Location = new Point(18, 6);
             label21.Name = "label21";
-            label21.Size = new Size(71, 19);
+            label21.Size = new Size(88, 23);
             label21.TabIndex = 22;
             label21.Text = "Plaint Text";
             // 
@@ -845,14 +869,14 @@
             checkBox_auto.Location = new Point(648, 2);
             checkBox_auto.Margin = new Padding(3, 2, 3, 2);
             checkBox_auto.Name = "checkBox_auto";
-            checkBox_auto.Size = new Size(118, 23);
+            checkBox_auto.Size = new Size(144, 27);
             checkBox_auto.TabIndex = 30;
             checkBox_auto.Text = "Auto Generate";
             checkBox_auto.UseVisualStyleBackColor = true;
             // 
             // Cryptool
             // 
-            AutoScaleDimensions = new SizeF(7F, 16F);
+            AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.WhiteSmoke;
             ClientSize = new Size(799, 678);
@@ -874,12 +898,12 @@
             panel3.PerformLayout();
             tabRSA.ResumeLayout(false);
             tabRSA.PerformLayout();
-            panel_manual.ResumeLayout(false);
-            panel_manual.PerformLayout();
             resultPanel.ResumeLayout(false);
             resultPanel.PerformLayout();
             panel_auto.ResumeLayout(false);
             panel_auto.PerformLayout();
+            panel_manual.ResumeLayout(false);
+            panel_manual.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -950,5 +974,7 @@
         private Label sug_3;
         private Label sug_2;
         private Label sug_1;
+        private Button button_listkey;
+        private Button button_savekey;
     }
 }
