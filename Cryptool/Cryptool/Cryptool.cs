@@ -37,7 +37,7 @@ namespace Cryptool
             toolTip.IsBalloon = true;
             toolTip.SetToolTip(rtbKeyPlayfair, "Nhập khoá.");
             toolTip.SetToolTip(rtbInputPlayfair, "Nhập thông điệp cần giải mã");
-            toolTip.SetToolTip(cbChar,"Tích để tuỳ chỉnh ký tự");
+            toolTip.SetToolTip(cbChar, "Tích để tuỳ chỉnh ký tự");
             char c1 = 'X';
             char c2 = 'Y';
 
@@ -47,7 +47,7 @@ namespace Cryptool
                 c2 = tbSecondSep.Text[0];
             }
             toolTip.SetToolTip(tbFirstSep, "Ví dụ: " + "UUF -> " + "U" + c1 + "UF");
-            toolTip.SetToolTip(tbSecondSep, "Ví dụ: " + c1 + c1 + " -> " + c1 + c2 +c1);
+            toolTip.SetToolTip(tbSecondSep, "Ví dụ: " + c1 + c1 + " -> " + c1 + c2 + c1);
         }
         // Khởi tạo giá trị cho ma trận khoá 
         private void InitMatrix(char[,] matrix, char defaultValue)
@@ -109,6 +109,15 @@ namespace Cryptool
         // Button mã hoá 
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(rtbKeyPlayfair.Text))
+            {
+                btnRand.PerformClick();
+            }
+            if (string.IsNullOrEmpty(rtbInputPlayfair.Text))
+            {
+                MessageBox.Show("Chưa nhập thông điệp");
+                return;
+            }
             if (tbFirstSep.Text == "" || tbSecondSep.Text == "")
             {
                 tbFirstSep.Text = "X";
@@ -129,7 +138,7 @@ namespace Cryptool
             string result = cipher.Encode(input, firstSep, sencondSep); // Hàm giải mã chính
             string[] resultString = result.Split(' ', 2);
             rtbResultPlayfair.Text = "{Message} " + splitPair(resultString[0]) +
-                "\n" +"{Cipher} " + splitPair(resultString[1]);
+                "\n" + "{Cipher} " + splitPair(resultString[1]);
         }
         // Chia string theo cặp 2 kí tự để hiển thị
         string splitPair(string input)
@@ -162,6 +171,15 @@ namespace Cryptool
         // Button giải mã 
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
+            if (string.IsNullOrEmpty(rtbKeyPlayfair.Text))
+            {
+                btnRand.PerformClick();
+            }
+            if (string.IsNullOrEmpty(rtbInputPlayfair.Text))
+            {
+                MessageBox.Show("Chưa nhập thông điệp");
+                return;
+            }
             if (tbFirstSep.Text == "" || tbSecondSep.Text == "")
             {
                 tbFirstSep.Text = "X";
@@ -174,7 +192,7 @@ namespace Cryptool
                 result = splitPair(result);
             }
             string mes = splitPair(rtbInputPlayfair.Text.ToUpper());
-            rtbResultPlayfair.Text = "{Cipher} " + mes + 
+            rtbResultPlayfair.Text = "{Cipher} " + mes +
                 "\n" + "{Message} " + result;
         }
 
@@ -203,7 +221,7 @@ namespace Cryptool
                 c2 = tbSecondSep.Text[0];
             }
 
-            toolTip.SetToolTip(tbFirstSep, "Ví dụ: " +  "UUF -> " + "U"+ c1 + "UF");
+            toolTip.SetToolTip(tbFirstSep, "Ví dụ: " + "UUF -> " + "U" + c1 + "UF");
             toolTip.SetToolTip(tbSecondSep, "Ví dụ: " + c1 + c1 + " -> " + c1 + c2 + c1);
         }
 
@@ -352,6 +370,17 @@ namespace Cryptool
             string type = is5x5 ? "5x5: chỉ có chữ." : "6x6: gồm chữ và số.";
             toolTip.SetToolTip(cbVersion, $"Đang chọn version {type}");
         }
+
+        private void btnRand_Click(object sender, EventArgs e)
+        {
+            Random random = new Random();
+            string chars = version == 5 ? "ABCDEFGHIJKLMNOPQRSTUVWXYZ" : "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+            int length = version == 5 ? 5 : 6;
+
+            rtbKeyPlayfair.Text = new string(Enumerable.Range(0, length)
+                .Select(_ => chars[random.Next(chars.Length)])
+                .ToArray());
+        }
         #endregion
 
         #region General
@@ -397,7 +426,7 @@ namespace Cryptool
                         if (messageMatch.Success) rtbInputPlayfair.Text = messageMatch.Groups[1].Value.Trim();
                         if (resultMatch.Success) rtbResultPlayfair.Text = resultMatch.Groups[1].Value.Trim();
 
-                        //if (!string.IsNullOrWhiteSpace(content)) rtbInputPlayfair.Text += content;
+                        if (!string.IsNullOrWhiteSpace(content)) rtbInputPlayfair.Text += content;
                     }
                     else if (currentIndex == 1) // Cần điền 
                     {
@@ -432,7 +461,7 @@ namespace Cryptool
             using (SaveFileDialog saveFileDialog = new SaveFileDialog())
             {
                 saveFileDialog.Filter = "Text files (*.txt)|*.txt|All files (*.*)|*.*";
-                saveFileDialog.Title = (currentIndex == 0)?"Playfair Save File":"RSA Save File";
+                saveFileDialog.Title = (currentIndex == 0) ? "Playfair Save File" : "RSA Save File";
                 saveFileDialog.DefaultExt = "txt";
                 saveFileDialog.AddExtension = true;
                 saveFileDialog.FileName = (currentIndex == 0) ? "Playfair_Save.txt" : "RSA_Save.txt";
@@ -447,7 +476,7 @@ namespace Cryptool
                             content += "{Key}" + rtbKeyPlayfair.Text;
                             content += "\n" + rtbResultPlayfair.Text;
                         }
-                        else if (currentIndex == 1) 
+                        else if (currentIndex == 1)
                         {
 
                             if (currentIndex == 0)
@@ -518,13 +547,13 @@ namespace Cryptool
         }
         private void inittooltip()
         {
-            ToolTip tooltip = new ToolTip(){};
+            ToolTip tooltip = new ToolTip() { };
 
             tooltip.IsBalloon = true;
-            tooltip.SetToolTip(plain_textbox,"Thông điệp gốc");
-            tooltip.SetToolTip(cipher_textbox,"Thông điệp mã hoá");
-            tooltip.SetToolTip(privatekeyTextbox,"Khoá bí mật");
-            tooltip.SetToolTip(publickeyTextbox,"Khoá công khai");
+            tooltip.SetToolTip(plain_textbox, "Thông điệp gốc");
+            tooltip.SetToolTip(cipher_textbox, "Thông điệp mã hoá");
+            tooltip.SetToolTip(privatekeyTextbox, "Khoá bí mật");
+            tooltip.SetToolTip(publickeyTextbox, "Khoá công khai");
             tooltip.SetToolTip(textBox_P, "Nhập số nguyên tố P (P > 1).");
             tooltip.SetToolTip(textBox_Q, "Nhập số nguyên tố Q (Q > 1).");
             tooltip.SetToolTip(textBox_E, "Nhập số nguyên E (1 < E < φ(N), và E phải nguyên tố cùng nhau với φ(N)).");
@@ -884,5 +913,6 @@ namespace Cryptool
         }
 
         #endregion
+
     }
 }

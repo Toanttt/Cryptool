@@ -79,7 +79,7 @@ namespace Cryptool
             // Khi không có khoá trả về mảng có chuỗi bình thường
             if (string.IsNullOrEmpty(key))
             {
-                string alphabetToUse = version == 5 ? temp : temp6;
+                string alphabetToUse = version == 5 ? temp.Replace('J'.ToString(), "") : temp6;
                 ConvertToMatrix(alphabetToUse, matrix);
                 return matrix;
             }
@@ -182,12 +182,6 @@ namespace Cryptool
             return result.ToUpper();
         }
 
-        // get() ma trận
-        public char[,]? getMatrix()
-        {
-            if (matrixLayout == null) return null;
-            return matrixLayout;
-        }
         // Thiết lập version cho Playfair
         public void setVersion(int version)
         {
