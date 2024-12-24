@@ -1,6 +1,7 @@
 ﻿using System.Numerics;
 using System.Security.Cryptography;
 using System.Text.RegularExpressions;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.Tab;
 
 namespace Cryptool
 {
@@ -15,6 +16,13 @@ namespace Cryptool
         public Cryptool()
         {
             InitializeComponent();
+            initPlayfair();
+            initRSA();
+        }
+
+        #region PlayFair
+        private void initPlayfair()
+        {
             cipher = new PlayfairCipher();
             matrixLayout = new char[version, version];
             InitMatrix(matrixLayout, '-');
@@ -22,11 +30,8 @@ namespace Cryptool
             cbVersion.SelectedIndex = 0;
             cb5x5.SelectedIndex = 0;
             initToolTipPlayfair();
-            init();
         }
-
-        #region PlayFair
-
+        // Khởi tạo các toolTip cho các controls
         private void initToolTipPlayfair()
         {
             toolTip.IsBalloon = true;
@@ -44,32 +49,7 @@ namespace Cryptool
             toolTip.SetToolTip(tbFirstSep, "Ví dụ: " + "UUF -> " + "U" + c1 + "UF");
             toolTip.SetToolTip(tbSecondSep, "Ví dụ: " + c1 + c1 + " -> " + c1 + c2 +c1);
         }
-        private void cbVersion_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            int version = cbVersion.SelectedItem.ToString() == "5x5" ? 5 : 6;
-            string type = "5x5: chỉ có chữ.";
-            if (version == 6)
-            {
-                cb5x5.Enabled = false;
-                type = "6x6: gồm chữ và số.";
-            }
-            else if (version == 5)
-            {
-                cb5x5.Enabled = true;
-                type = "5x5: chỉ có chữ.";
-            }
-            cipher.setVersion(version);
-            this.version = version;
-            matrixLayout = new char[version, version];
-            InitMatrix(matrixLayout, '-');
-
-            string change = rtbKeyPlayfair.Text;
-            matrixLayout = cipher.createMatrix(change);
-            DisplayMatrix(matrixLayout);
-
-            toolTip.SetToolTip(cbVersion, "Đang chọn version " + type);
-        }
-
+        // Khởi tạo giá trị cho ma trận khoá 
         private void InitMatrix(char[,] matrix, char defaultValue)
         {
             for (int i = 0; i < version; i++)
@@ -81,6 +61,7 @@ namespace Cryptool
             }
         }
 
+        // Hiện ma trận khoá thông qua table layout panel
         private void DisplayMatrix(char[,] matrix)
         {
             tlpKeyMatrix.Controls.Clear();
@@ -125,7 +106,7 @@ namespace Cryptool
                 }
             }
         }
-
+        // Button mã hoá 
         private void btnEncrypt_Click(object sender, EventArgs e)
         {
             if (tbFirstSep.Text == "" || tbSecondSep.Text == "")
@@ -150,23 +131,13 @@ namespace Cryptool
             rtbResultPlayfair.Text = "{Message} " + splitPair(resultString[0]) +
                 "\n" +"{Cipher} " + splitPair(resultString[1]);
         }
-
+        // Chia string theo cặp 2 kí tự để hiển thị
         string splitPair(string input)
         {
             if (string.IsNullOrEmpty(input)) return string.Empty;
             input = input.Replace(" ", "");
-
-
-            char removeChar = 'J';
-            char replaceChar = 'I';
-            if (string.IsNullOrEmpty(cb5x5.SelectedItem.ToString()))
-            {
-            }
-            else
-            {
-                removeChar = cb5x5.SelectedItem.ToString()[0];
-                replaceChar = cb5x5.SelectedItem.ToString()[5];
-            }
+            char removeChar = cb5x5.SelectedItem?.ToString()[0] ?? 'J';
+            char replaceChar = cb5x5.SelectedItem?.ToString()[5] ?? 'I';
 
             if (version == 5)
             {
@@ -188,7 +159,7 @@ namespace Cryptool
 
             return result.ToString().Trim();
         }
-
+        // Button giải mã 
         private void btnDecrypt_Click(object sender, EventArgs e)
         {
             if (tbFirstSep.Text == "" || tbSecondSep.Text == "")
@@ -207,12 +178,6 @@ namespace Cryptool
                 "\n" + "{Message} " + result;
         }
 
-        private void rtbKey_ContentsResized(object sender, ContentsResizedEventArgs e)
-        {
-            string change = rtbKeyPlayfair.Text;
-            matrixLayout = cipher.createMatrix(change);
-            DisplayMatrix(matrixLayout);
-        }
         // Ô ký tự trùng thứ nhất 
         private void tbFirstSep_TextChanged(object sender, EventArgs e)
         {
@@ -240,7 +205,6 @@ namespace Cryptool
 
             toolTip.SetToolTip(tbFirstSep, "Ví dụ: " +  "UUF -> " + "U"+ c1 + "UF");
             toolTip.SetToolTip(tbSecondSep, "Ví dụ: " + c1 + c1 + " -> " + c1 + c2 + c1);
-
         }
 
         private void tbFirstSep_KeyPress(object sender, KeyPressEventArgs e)
@@ -318,20 +282,20 @@ namespace Cryptool
         {
             if (version == 5)
             {
-                if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar))
+                if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ' ')
                 {
                     e.Handled = true;
                 }
             }
             else if (version == 6)
             {
-                if (!char.IsLetterOrDigit(e.KeyChar) && !char.IsControl(e.KeyChar))
+                if (!char.IsLetterOrDigit(e.KeyChar) && !char.IsControl(e.KeyChar) && e.KeyChar != ' ')
                 {
                     e.Handled = true;
                 }
             }
         }
-
+        // Xử lý khoá 
         private void rtbKeyPlayfair_KeyPress(object sender, KeyPressEventArgs e)
         {
             if (version == 5)
@@ -350,12 +314,18 @@ namespace Cryptool
             }
         }
 
+        private void rtbKey_ContentsResized(object sender, ContentsResizedEventArgs e)
+        {
+            string change = rtbKeyPlayfair.Text;
+            matrixLayout = cipher.createMatrix(change);
+            DisplayMatrix(matrixLayout);
+        }
+        // Combobox loại ký tự và thay thế
         private void cb5x5_SelectedIndexChanged(object sender, EventArgs e)
         {
-            char removeChar = 'J';
-            char replaceChar = 'I';
-            removeChar = cb5x5.SelectedItem.ToString()[0];
-            replaceChar = cb5x5.SelectedItem.ToString()[5];
+            var selectedText = cb5x5.SelectedItem.ToString();
+            char removeChar = selectedText[0];
+            char replaceChar = selectedText[5];
             if (version == 5)
             {
                 cipher.setAlphabet(removeChar, replaceChar);
@@ -365,6 +335,22 @@ namespace Cryptool
             }
 
             toolTip.SetToolTip(cb5x5, "Ma trận 5x5 loại kí tự " + removeChar + " thay bằng kí tự " + replaceChar);
+        }
+        // Combobox chọn version 5x5 hoăc 6x6
+        private void cbVersion_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            version = cbVersion.SelectedItem.ToString() == "5x5" ? 5 : 6;
+            bool is5x5 = version == 5;
+            cb5x5.Enabled = is5x5;
+
+            cipher.setVersion(version);
+            matrixLayout = new char[version, version];
+            InitMatrix(matrixLayout, '-');
+            matrixLayout = cipher.createMatrix(rtbKeyPlayfair.Text);
+            DisplayMatrix(matrixLayout);
+
+            string type = is5x5 ? "5x5: chỉ có chữ." : "6x6: gồm chữ và số.";
+            toolTip.SetToolTip(cbVersion, $"Đang chọn version {type}");
         }
         #endregion
 
@@ -400,11 +386,18 @@ namespace Cryptool
                     {
                         var keyMatch = Regex.Match(content, @"\{Key\}(.*?)(\n|$)", RegexOptions.Singleline);
                         var messageMatch = Regex.Match(content, @"\{Message\}(.*?)(\n|$)", RegexOptions.Singleline);
+                        var cipherMatch = Regex.Match(content, @"\{Cipher\}(.*?)(\n|$)", RegexOptions.Singleline);
                         var resultMatch = Regex.Match(content, @"\n(.*)$", RegexOptions.Singleline);
+
+                        if (keyMatch.Success) content = content.Replace(keyMatch.Value, "").Trim();
+                        if (messageMatch.Success) content = content.Replace(messageMatch.Value, "").Trim();
+                        if (resultMatch.Success) content = content.Replace(resultMatch.Value, "").Trim();
 
                         if (keyMatch.Success) rtbKeyPlayfair.Text = keyMatch.Groups[1].Value.Trim();
                         if (messageMatch.Success) rtbInputPlayfair.Text = messageMatch.Groups[1].Value.Trim();
                         if (resultMatch.Success) rtbResultPlayfair.Text = resultMatch.Groups[1].Value.Trim();
+
+                        //if (!string.IsNullOrWhiteSpace(content)) rtbInputPlayfair.Text += content;
                     }
                     else if (currentIndex == 1) // Cần điền 
                     {
@@ -504,7 +497,7 @@ namespace Cryptool
         #endregion
 
         #region RSA
-        private void init()
+        private void initRSA()
         {
             // Gắn sự kiện cho RadioButton
             radioButton1.CheckedChanged += RadioButton_CheckedChanged;
