@@ -579,7 +579,7 @@
             // sug_3
             // 
             sug_3.AutoSize = true;
-            sug_3.Location = new Point(641, 189);
+            sug_3.Location = new Point(610, 249);
             sug_3.Name = "sug_3";
             sug_3.Size = new Size(64, 23);
             sug_3.TabIndex = 35;
@@ -588,7 +588,7 @@
             // sug_2
             // 
             sug_2.AutoSize = true;
-            sug_2.Location = new Point(641, 159);
+            sug_2.Location = new Point(610, 219);
             sug_2.Name = "sug_2";
             sug_2.Size = new Size(64, 23);
             sug_2.TabIndex = 35;
@@ -597,7 +597,7 @@
             // sug_1
             // 
             sug_1.AutoSize = true;
-            sug_1.Location = new Point(641, 129);
+            sug_1.Location = new Point(610, 189);
             sug_1.Name = "sug_1";
             sug_1.Size = new Size(64, 23);
             sug_1.TabIndex = 35;

@@ -174,7 +174,13 @@ namespace Cryptool
         {
             if (mes.Length % 2 == 1) return "- Mật mã có số lượng lẻ, không hợp lệ.";
             mes = RemoveDiacritics(mes);
-            mes = new string(mes.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray()).Replace(removeChar, replaceChar);
+            if (version == 5)
+            {
+                mes = new string(mes.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray()).Replace(removeChar, replaceChar);
+            } else if (version == 6)
+            {
+                mes = new string(mes.Where(char.IsLetterOrDigit).Select(char.ToUpper).ToArray());
+            }
 
             string result = "";
             for (int i = 0; i < mes.Length; i += 2)
