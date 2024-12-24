@@ -35,6 +35,7 @@
             btnNew = new Button();
             tctrlMain = new TabControl();
             tabPlayfair = new TabPage();
+            btnRand = new Button();
             gbOption = new GroupBox();
             cb5x5 = new ComboBox();
             cbChar = new CheckBox();
@@ -57,14 +58,10 @@
             rtbKeyPlayfair = new RichTextBox();
             label11 = new Label();
             tabRSA = new TabPage();
-            resultPanel = new Panel();
-            label_message = new Label();
-            button_decrypt = new Button();
-            button_encrypt = new Button();
-            cipher_textbox = new RichTextBox();
-            label3 = new Label();
-            panel_auto = new Panel();
             panel_manual = new Panel();
+            sug_3 = new Label();
+            sug_2 = new Label();
+            sug_1 = new Label();
             textBox_D = new TextBox();
             label16 = new Label();
             textBox_phiN = new TextBox();
@@ -78,6 +75,13 @@
             textBox_P = new TextBox();
             label5 = new Label();
             label6 = new Label();
+            resultPanel = new Panel();
+            label_message = new Label();
+            button_decrypt = new Button();
+            button_encrypt = new Button();
+            cipher_textbox = new RichTextBox();
+            label3 = new Label();
+            panel_auto = new Panel();
             radioButton3 = new RadioButton();
             radioButton4 = new RadioButton();
             radioButton2 = new RadioButton();
@@ -90,16 +94,15 @@
             plain_textbox = new RichTextBox();
             label21 = new Label();
             checkBox_auto = new CheckBox();
-            btnRand = new Button();
             panel1.SuspendLayout();
             tctrlMain.SuspendLayout();
             tabPlayfair.SuspendLayout();
             gbOption.SuspendLayout();
             panel3.SuspendLayout();
             tabRSA.SuspendLayout();
+            panel_manual.SuspendLayout();
             resultPanel.SuspendLayout();
             panel_auto.SuspendLayout();
-            panel_manual.SuspendLayout();
             SuspendLayout();
             // 
             // panel1
@@ -124,9 +127,9 @@
             label1.ForeColor = Color.White;
             label1.Location = new Point(0, 1);
             label1.Name = "label1";
-            label1.Size = new Size(196, 38);
+            label1.Size = new Size(246, 38);
             label1.TabIndex = 6;
-            label1.Text = "PlayRSA Tool";
+            label1.Text = "PlayRSA Tool 🔔";
             // 
             // btnSave
             // 
@@ -201,6 +204,16 @@
             tabPlayfair.TabIndex = 0;
             tabPlayfair.Text = "Playfair";
             tabPlayfair.Click += tabPage1_Click;
+            // 
+            // btnRand
+            // 
+            btnRand.Location = new Point(315, 31);
+            btnRand.Name = "btnRand";
+            btnRand.Size = new Size(35, 26);
+            btnRand.TabIndex = 30;
+            btnRand.Text = ". . .";
+            btnRand.UseVisualStyleBackColor = true;
+            btnRand.Click += btnRand_Click;
             // 
             // gbOption
             // 
@@ -458,85 +471,12 @@
             tabRSA.Text = "RSA";
             tabRSA.Click += tabPage2_Click;
             // 
-            // resultPanel
-            // 
-            resultPanel.BackColor = Color.White;
-            resultPanel.Controls.Add(label_message);
-            resultPanel.Location = new Point(18, 519);
-            resultPanel.Margin = new Padding(3, 2, 3, 2);
-            resultPanel.Name = "resultPanel";
-            resultPanel.Size = new Size(767, 34);
-            resultPanel.TabIndex = 29;
-            // 
-            // label_message
-            // 
-            label_message.AutoSize = true;
-            label_message.Location = new Point(4, 5);
-            label_message.Name = "label_message";
-            label_message.Size = new Size(171, 19);
-            label_message.TabIndex = 0;
-            label_message.Text = "Đã chọn tự động tạo khoá";
-            // 
-            // button_decrypt
-            // 
-            button_decrypt.Location = new Point(106, 558);
-            button_decrypt.Margin = new Padding(3, 2, 3, 2);
-            button_decrypt.Name = "button_decrypt";
-            button_decrypt.Size = new Size(82, 37);
-            button_decrypt.TabIndex = 28;
-            button_decrypt.Text = "Decrypt";
-            button_decrypt.UseVisualStyleBackColor = true;
-            // 
-            // button_encrypt
-            // 
-            button_encrypt.Location = new Point(18, 558);
-            button_encrypt.Margin = new Padding(3, 2, 3, 2);
-            button_encrypt.Name = "button_encrypt";
-            button_encrypt.Size = new Size(82, 37);
-            button_encrypt.TabIndex = 27;
-            button_encrypt.Text = "Encrypt";
-            button_encrypt.UseVisualStyleBackColor = true;
-            // 
-            // cipher_textbox
-            // 
-            cipher_textbox.BorderStyle = BorderStyle.FixedSingle;
-            cipher_textbox.Location = new Point(412, 34);
-            cipher_textbox.Margin = new Padding(3, 2, 3, 2);
-            cipher_textbox.Name = "cipher_textbox";
-            cipher_textbox.Size = new Size(366, 185);
-            cipher_textbox.TabIndex = 26;
-            cipher_textbox.Text = "";
-            // 
-            // label3
-            // 
-            label3.AutoSize = true;
-            label3.Location = new Point(412, 4);
-            label3.Name = "label3";
-            label3.Size = new Size(77, 19);
-            label3.TabIndex = 25;
-            label3.Text = "Cipher Text";
-            // 
-            // panel_auto
-            // 
-            panel_auto.BackColor = Color.White;
-            panel_auto.Controls.Add(radioButton3);
-            panel_auto.Controls.Add(radioButton4);
-            panel_auto.Controls.Add(radioButton2);
-            panel_auto.Controls.Add(radioButton1);
-            panel_auto.Controls.Add(privatekeyTextbox);
-            panel_auto.Controls.Add(label18);
-            panel_auto.Controls.Add(publickeyTextbox);
-            panel_auto.Controls.Add(label19);
-            panel_auto.Controls.Add(label20);
-            panel_auto.Location = new Point(18, 223);
-            panel_auto.Margin = new Padding(3, 2, 3, 2);
-            panel_auto.Name = "panel_auto";
-            panel_auto.Size = new Size(765, 282);
-            panel_auto.TabIndex = 24;
-            // 
             // panel_manual
             // 
             panel_manual.BackColor = Color.White;
+            panel_manual.Controls.Add(sug_3);
+            panel_manual.Controls.Add(sug_2);
+            panel_manual.Controls.Add(sug_1);
             panel_manual.Controls.Add(textBox_D);
             panel_manual.Controls.Add(label16);
             panel_manual.Controls.Add(textBox_phiN);
@@ -555,6 +495,33 @@
             panel_manual.Name = "panel_manual";
             panel_manual.Size = new Size(767, 282);
             panel_manual.TabIndex = 18;
+            // 
+            // sug_3
+            // 
+            sug_3.AutoSize = true;
+            sug_3.Location = new Point(641, 189);
+            sug_3.Name = "sug_3";
+            sug_3.Size = new Size(53, 19);
+            sug_3.TabIndex = 35;
+            sug_3.Text = "label22";
+            // 
+            // sug_2
+            // 
+            sug_2.AutoSize = true;
+            sug_2.Location = new Point(641, 159);
+            sug_2.Name = "sug_2";
+            sug_2.Size = new Size(53, 19);
+            sug_2.TabIndex = 35;
+            sug_2.Text = "label22";
+            // 
+            // sug_1
+            // 
+            sug_1.AutoSize = true;
+            sug_1.Location = new Point(641, 129);
+            sug_1.Name = "sug_1";
+            sug_1.Size = new Size(53, 19);
+            sug_1.TabIndex = 35;
+            sug_1.Text = "label22";
             // 
             // textBox_D
             // 
@@ -677,6 +644,82 @@
             label6.Size = new Size(117, 19);
             label6.TabIndex = 8;
             label6.Text = "Key Management";
+            // 
+            // resultPanel
+            // 
+            resultPanel.BackColor = Color.White;
+            resultPanel.Controls.Add(label_message);
+            resultPanel.Location = new Point(18, 519);
+            resultPanel.Margin = new Padding(3, 2, 3, 2);
+            resultPanel.Name = "resultPanel";
+            resultPanel.Size = new Size(767, 34);
+            resultPanel.TabIndex = 29;
+            // 
+            // label_message
+            // 
+            label_message.AutoSize = true;
+            label_message.Location = new Point(4, 5);
+            label_message.Name = "label_message";
+            label_message.Size = new Size(171, 19);
+            label_message.TabIndex = 0;
+            label_message.Text = "Đã chọn tự động tạo khoá";
+            // 
+            // button_decrypt
+            // 
+            button_decrypt.Location = new Point(106, 558);
+            button_decrypt.Margin = new Padding(3, 2, 3, 2);
+            button_decrypt.Name = "button_decrypt";
+            button_decrypt.Size = new Size(82, 37);
+            button_decrypt.TabIndex = 28;
+            button_decrypt.Text = "Decrypt";
+            button_decrypt.UseVisualStyleBackColor = true;
+            // 
+            // button_encrypt
+            // 
+            button_encrypt.Location = new Point(18, 558);
+            button_encrypt.Margin = new Padding(3, 2, 3, 2);
+            button_encrypt.Name = "button_encrypt";
+            button_encrypt.Size = new Size(82, 37);
+            button_encrypt.TabIndex = 27;
+            button_encrypt.Text = "Encrypt";
+            button_encrypt.UseVisualStyleBackColor = true;
+            // 
+            // cipher_textbox
+            // 
+            cipher_textbox.BorderStyle = BorderStyle.FixedSingle;
+            cipher_textbox.Location = new Point(412, 34);
+            cipher_textbox.Margin = new Padding(3, 2, 3, 2);
+            cipher_textbox.Name = "cipher_textbox";
+            cipher_textbox.Size = new Size(366, 185);
+            cipher_textbox.TabIndex = 26;
+            cipher_textbox.Text = "";
+            // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Location = new Point(412, 4);
+            label3.Name = "label3";
+            label3.Size = new Size(77, 19);
+            label3.TabIndex = 25;
+            label3.Text = "Cipher Text";
+            // 
+            // panel_auto
+            // 
+            panel_auto.BackColor = Color.White;
+            panel_auto.Controls.Add(radioButton3);
+            panel_auto.Controls.Add(radioButton4);
+            panel_auto.Controls.Add(radioButton2);
+            panel_auto.Controls.Add(radioButton1);
+            panel_auto.Controls.Add(privatekeyTextbox);
+            panel_auto.Controls.Add(label18);
+            panel_auto.Controls.Add(publickeyTextbox);
+            panel_auto.Controls.Add(label19);
+            panel_auto.Controls.Add(label20);
+            panel_auto.Location = new Point(18, 223);
+            panel_auto.Margin = new Padding(3, 2, 3, 2);
+            panel_auto.Name = "panel_auto";
+            panel_auto.Size = new Size(765, 282);
+            panel_auto.TabIndex = 24;
             // 
             // radioButton3
             // 
@@ -807,16 +850,6 @@
             checkBox_auto.Text = "Auto Generate";
             checkBox_auto.UseVisualStyleBackColor = true;
             // 
-            // btnRand
-            // 
-            btnRand.Location = new Point(315, 31);
-            btnRand.Name = "btnRand";
-            btnRand.Size = new Size(35, 26);
-            btnRand.TabIndex = 30;
-            btnRand.Text = ". . .";
-            btnRand.UseVisualStyleBackColor = true;
-            btnRand.Click += btnRand_Click;
-            // 
             // Cryptool
             // 
             AutoScaleDimensions = new SizeF(7F, 16F);
@@ -841,12 +874,12 @@
             panel3.PerformLayout();
             tabRSA.ResumeLayout(false);
             tabRSA.PerformLayout();
+            panel_manual.ResumeLayout(false);
+            panel_manual.PerformLayout();
             resultPanel.ResumeLayout(false);
             resultPanel.PerformLayout();
             panel_auto.ResumeLayout(false);
             panel_auto.PerformLayout();
-            panel_manual.ResumeLayout(false);
-            panel_manual.PerformLayout();
             ResumeLayout(false);
         }
 
@@ -914,5 +947,8 @@
         private Label label21;
         private CheckBox checkBox_auto;
         private Button btnRand;
+        private Label sug_3;
+        private Label sug_2;
+        private Label sug_1;
     }
 }

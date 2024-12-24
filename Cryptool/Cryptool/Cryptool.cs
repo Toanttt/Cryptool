@@ -544,6 +544,13 @@ namespace Cryptool
             checkBox_auto.CheckedChanged += checkbox_auto_CheckedChanged;
             showmessage("Nhập P và Q để tạo khoá thủ công");
             inittooltip();
+            sug_1.Text = string.Empty;
+            sug_2.Text = string.Empty;
+            sug_3.Text = string.Empty;
+
+            sug_1.Click += LabelD_Click;
+            sug_2.Click += LabelD_Click;
+            sug_3.Click += LabelD_Click;
         }
         private void inittooltip()
         {
@@ -870,6 +877,7 @@ namespace Cryptool
                 {
                     // Hiển thị thông báo nếu E hợp lệ
                     showmessage("E hợp lệ!");
+                    CalculateAndDisplayDValues((int)E, (int)phiN);
                 }
                 else
                 {
@@ -912,6 +920,44 @@ namespace Cryptool
             }
         }
 
+        private List<int> SuggestDValues(int E, int phiN)
+        {
+            List<int> suggestions = new List<int>();
+            int x = 1;
+
+            while (suggestions.Count < 3)
+            {
+                int candidate = (phiN * x + 1);
+                if (candidate % E == 0)
+                {
+                    int D = candidate / E;
+                    suggestions.Add(D);
+                }
+
+                x++;
+            }
+
+            return suggestions;
+        }
+        private void LabelD_Click(object sender, EventArgs e)
+        {
+            // Khi người dùng chọn một Label, giá trị hiển thị trong TextBox
+            if (sender is Label label)
+            {
+                string value = label.Text.Split(':')[1].Trim(); // Lấy giá trị D từ Label
+                textBox_D.Text = value;
+            }
+        }
+        private void CalculateAndDisplayDValues(int E, int phiN)
+        {
+            // Gọi hàm gợi ý các giá trị D
+            List<int> suggestedD = SuggestDValues(E, phiN);
+
+            // Hiển thị các giá trị D lên Label
+            sug_1.Text = $"D1: {suggestedD[0]}";
+            sug_2.Text = $"D2: {suggestedD[1]}";
+            sug_3.Text = $"D3: {suggestedD[2]}";
+        }
         #endregion
 
     }
