@@ -469,7 +469,7 @@
             panel_manual.Location = new Point(18, 209);
             panel_manual.Margin = new Padding(3, 2, 3, 2);
             panel_manual.Name = "panel_manual";
-            panel_manual.Size = new Size(718, 264);
+            panel_manual.Size = new Size(767, 264);
             panel_manual.TabIndex = 18;
             // 
             // textBox_D
@@ -598,7 +598,7 @@
             resultPanel.Location = new Point(18, 487);
             resultPanel.Margin = new Padding(3, 2, 3, 2);
             resultPanel.Name = "resultPanel";
-            resultPanel.Size = new Size(718, 32);
+            resultPanel.Size = new Size(767, 32);
             resultPanel.TabIndex = 29;
             // 
             // label_message
@@ -636,7 +636,7 @@
             cipher_textbox.Location = new Point(412, 32);
             cipher_textbox.Margin = new Padding(3, 2, 3, 2);
             cipher_textbox.Name = "cipher_textbox";
-            cipher_textbox.Size = new Size(347, 173);
+            cipher_textbox.Size = new Size(366, 173);
             cipher_textbox.TabIndex = 26;
             cipher_textbox.Text = "";
             // 
@@ -664,7 +664,7 @@
             panel_auto.Location = new Point(18, 209);
             panel_auto.Margin = new Padding(3, 2, 3, 2);
             panel_auto.Name = "panel_auto";
-            panel_auto.Size = new Size(718, 264);
+            panel_auto.Size = new Size(765, 264);
             panel_auto.TabIndex = 24;
             // 
             // radioButton3
@@ -770,7 +770,7 @@
             plain_textbox.Location = new Point(18, 32);
             plain_textbox.Margin = new Padding(3, 2, 3, 2);
             plain_textbox.Name = "plain_textbox";
-            plain_textbox.Size = new Size(347, 173);
+            plain_textbox.Size = new Size(366, 173);
             plain_textbox.TabIndex = 23;
             plain_textbox.Text = "";
             // 
